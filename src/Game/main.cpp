@@ -1,9 +1,8 @@
 
 
-#include <print>
-
+#include "Application.h"
 
 int main()
 {
-    std::println("Hello World");
+    Application app;
 }
