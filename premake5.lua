@@ -30,4 +30,6 @@ project "OpenGLTetris"
       defines { "NDEBUG" }
       optimize "On"
 
+      postbuildcommands { "{COPY} libs/sdl3/lib/x64/SDL3.dll bin/Release" }
+
     

@@ -2,21 +2,28 @@
 
 #include <SDL3/SDL.h>
 
-#include <print>
-#include <stdexcept>
-#include <stacktrace>
+#include <string_view>
+
+#include "Utility/Verify.h"
 
 class Window
 {
 public:
-	Window(const int width, const int height);
+	Window() = default;
+	Window(std::string_view title, const int width, const int height);
 	~Window();
 
-
 	void Update();
+
+	void Events();
+
+public:
+	inline const bool const GetWindowIsOpen() const { return mWindowIsOpen; }
 
 private:
 	::SDL_Window* mPlatformWindow;
 	::SDL_Event mWindowEvent;
+
+	bool mWindowIsOpen = false;
 };
 

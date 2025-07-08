@@ -1,8 +1,8 @@
 #include "Application.h"
 
-Application::Application()
+Application::Application() : mGameWindow(Window("Tetris",800,600))
 {
-	std::println("Hello World");
+	Update();
 }
 
 Application::~Application()
@@ -11,4 +11,8 @@ Application::~Application()
 
 void Application::Update()
 {
+	while (mGameWindow.GetWindowIsOpen())
+	{
+		mGameWindow.Events();
+	}
 }

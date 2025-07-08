@@ -2,7 +2,7 @@
 
 #include <print>
 
-
+#include "Window/Window.h"
 
 class Application
 {
@@ -13,5 +13,6 @@ public:
 	void Update();
 
 private:
+	::Window mGameWindow;
 };
 
