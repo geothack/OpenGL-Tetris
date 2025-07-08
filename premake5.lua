@@ -1,6 +1,7 @@
 
 workspace "OpenGLTetris"
     configurations {"Debug","Release"}
+    
 
 project "OpenGLTetris"
     kind "ConsoleApp"
@@ -23,11 +24,10 @@ project "OpenGLTetris"
       defines { "DEBUG" }
       symbols "On"
 
+      postbuildcommands { "{COPY} libs/sdl3/lib/x64/SDL3.dll bin/Debug" }
+
    filter "configurations:Release"
       defines { "NDEBUG" }
       optimize "On"
 
-      postbuildcommands {
-        "{COPY} libs/sdl3/lib/x64/SDL3.dll Bin/Debug"
-        --"{COPYDIR} assets ../bin/assets"
-    }
+    
