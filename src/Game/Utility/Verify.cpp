@@ -1,6 +1,6 @@
 #include "Verify.h"
 
-void Verify::Update(std::string_view message, int value)
+bool Verify::Update(std::string_view message, int value)
 {
 	if (value == 0)
 	{

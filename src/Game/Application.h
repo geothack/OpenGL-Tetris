@@ -3,6 +3,7 @@
 #include <print>
 
 #include "Window/Window.h"
+#include "Render/OpenGLShader.h"
 
 class Application
 {
@@ -13,6 +14,15 @@ public:
 	void Update();
 
 private:
+	void Init();
+
+
+private:
 	::Window mGameWindow;
+
+	// Shaders
+	::OpenGLShader mBasicShader;
+
+	uint32_t VAO;
 };
 

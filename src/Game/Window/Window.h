@@ -4,8 +4,6 @@
 
 #include <string_view>
 
-#include "Utility/Verify.h"
-
 class Window
 {
 public:
@@ -13,7 +11,9 @@ public:
 	Window(std::string_view title, const int width, const int height);
 	~Window();
 
-	void Update();
+	void Clear() const;
+
+	void Swap() const;
 
 	void Events();
 

@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Utility/Verify.h"
 
 Window::Window(std::string_view title, const int width, const int height)
 {
@@ -28,10 +29,14 @@ Window::~Window()
 	::SDL_Quit();
 }
 
-void Window::Update()
+void Window::Clear() const
 {
 	::glClearColor(0.8, 0.5, 0.32, 1.0);
 	::glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Window::Swap() const
+{
 	::SDL_GL_SwapWindow(mPlatformWindow);
 }
 
