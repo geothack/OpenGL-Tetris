@@ -12,13 +12,13 @@ project "OpenGLTetris"
 
     architecture ("x64")
 
-    includedirs { "libs/sdl3/include", "src/Game" }
+    includedirs { "libs/sdl3/include", "src/Game", "libs/glad/glad/include" }
 
     libdirs { "libs/sdl3/lib/x64" }
 
     links { "SDL3.dll","SDL3.lib" }
 
-   files { "src/Game/**.h", "src/Game/**.cpp" }
+   files { "src/Game/**.h", "src/Game/**.cpp", "src/Game/**.c" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }

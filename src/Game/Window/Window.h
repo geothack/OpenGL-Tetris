@@ -1,5 +1,5 @@
 #pragma once
-
+#include <glad/glad.h>
 #include <SDL3/SDL.h>
 
 #include <string_view>
@@ -23,6 +23,7 @@ public:
 private:
 	::SDL_Window* mPlatformWindow;
 	::SDL_Event mWindowEvent;
+	::SDL_GLContext mOpenGLContext;
 
 	bool mWindowIsOpen = false;
 };

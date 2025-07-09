@@ -14,5 +14,8 @@ void Application::Update()
 	while (mGameWindow.GetWindowIsOpen())
 	{
 		mGameWindow.Events();
+
+		mGameWindow.Update();
+
 	}
 }
