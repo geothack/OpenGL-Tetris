@@ -1,3 +1,4 @@
+#include "Utility/PreLibrary.h"
 #include "Verify.h"
 
 bool Verify::Update(std::string_view message, int value)

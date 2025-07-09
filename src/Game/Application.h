@@ -1,7 +1,5 @@
 #pragma once
 
-#include <print>
-
 #include "Window/Window.h"
 #include "Render/Material.h"
 

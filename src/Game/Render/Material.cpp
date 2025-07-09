@@ -1,3 +1,4 @@
+#include "Utility/PreLibrary.h"
 #include "Material.h"
 
 Material::Material(Color color) : mColor(color)
@@ -9,7 +10,7 @@ Material::~Material()
 {
 }
 
-void Material::Attach() const
+void Material::Attach() 
 {
 	mOpenGLShader.Attach();
 	mOpenGLShader.SetFloat("Red", mColor.Red);

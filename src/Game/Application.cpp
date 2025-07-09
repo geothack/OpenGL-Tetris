@@ -1,3 +1,4 @@
+#include "Utility/PreLibrary.h"
 #include "Application.h"
 
 Application::Application() : mGameWindow(Window("Tetris",800,600))

@@ -1,3 +1,4 @@
+#include "Utility/PreLibrary.h"
 #include "OpenGLShader.h"
 #include "Utility/Verify.h"
 
@@ -10,6 +11,31 @@ OpenGLShader::OpenGLShader(const std::filesystem::path& vertexShaderPath, const 
 	else
 	{
 		MakeShader(vertexShaderPath, fragShaderPath, geoShaderPath);
+	}
+
+	::GLint uniformCount{};
+	::glGetProgramiv(mProgram, GL_ACTIVE_UNIFORMS, &uniformCount);
+
+	if (uniformCount != 0)
+	{
+		::GLint maxNameLength{};
+		::glGetProgramiv(mProgram, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLength);
+
+		::GLsizei length{};
+		::GLsizei count{};
+		::GLenum type{};
+
+		for (auto i = 0; i < uniformCount; i++)
+		{
+			std::string name(maxNameLength, '\O');
+			::glGetActiveUniform(mProgram, i, maxNameLength, &length, &count, &type, name.data());
+
+			name.resize(length);
+
+			const auto location = ::glGetUniformLocation(mProgram, name.c_str());
+
+			mUniformCache[name] = location;
+		}
 	}
 }
 
@@ -33,6 +59,42 @@ void OpenGLShader::MakeShader(const std::filesystem::path& vertexShaderPath, con
 void OpenGLShader::Attach() const
 {
 	glUseProgram(mProgram);
+}
+
+void OpenGLShader::SetVec3(std::string_view name, const glm::vec3& value)
+{
+	const auto uniform = mUniformCache.find(name.data());
+	const auto string = std::format("Failed to find uniform {}", name);
+	Verify::Update(string, uniform != std::ranges::cend(mUniformCache));
+
+	::glUniform3fv(uniform->second, 1, &value[0]);
+}
+
+void OpenGLShader::SetMat4(std::string_view name, const glm::mat4& value)
+{
+	const auto uniform = mUniformCache.find(name.data());
+	const auto string = std::format("Failed to find uniform {}", name);
+	Verify::Update(string, uniform != std::ranges::cend(mUniformCache));
+
+	::glUniformMatrix4fv(uniform->second, 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void OpenGLShader::SetInt(std::string_view name, int value)
+{
+	const auto uniform = mUniformCache.find(name.data());
+	const auto string = std::format("Failed to find uniform {}", name);
+	Verify::Update(string, uniform != std::ranges::cend(mUniformCache));
+
+	::glUniform1i(uniform->second, value);
+}
+
+void OpenGLShader::SetFloat(std::string_view name, float value)
+{
+	const auto uniform = mUniformCache.find(name.data());
+	const auto string = std::format("Failed to find uniform {}", name);
+	Verify::Update(string, uniform != std::ranges::cend(mUniformCache));
+
+	::glUniform1f(uniform->second, value);
 }
 
 void OpenGLShader::Create(uint32_t& shader, const char* path, uint32_t type)

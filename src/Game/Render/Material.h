@@ -18,7 +18,7 @@ public:
 	Material(Color color);
 	~Material();
 
-	void Attach() const;
+	void Attach();
 
 private:
 	OpenGLShader mOpenGLShader;

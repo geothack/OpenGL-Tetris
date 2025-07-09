@@ -1,3 +1,4 @@
+#include "Utility/PreLibrary.h"
 #include "OpenGLSpriteRenderer.h"
 
 OpenGLSpriteRenderer::OpenGLSpriteRenderer()
