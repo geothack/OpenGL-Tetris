@@ -18,7 +18,7 @@ void Application::Update()
 
         mGameWindow.Clear();
 
-        mBasicShader.Attach();
+        mSquareMaterial.Attach();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -28,7 +28,7 @@ void Application::Update()
 
 void Application::Init()
 {
-	mBasicShader = OpenGLShader("res/Shaders/Basic.vert", "res/Shaders/Basic.frag");
+    mSquareMaterial = ::Material({ .Red = 0.23,.Green = 0.79,.Blue = 0.67 });
 
     float vertices[] = {
          0.5f,  0.5f, 0.0f,  // top right

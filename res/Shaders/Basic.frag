@@ -2,7 +2,11 @@
 
 out vec4 FragColor;
 
+uniform float Red;
+uniform float Green;
+uniform float Blue;
+
 void main()
 {
-	FragColor = vec4(0.23,0.79,0.67,1.0);
+	FragColor = vec4(Red,Green,Blue,1.0);
 }
