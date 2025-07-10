@@ -18,17 +18,20 @@ void Application::Update()
 		mGameWindow.Events();
 
 		mSpriteRenderer.Update();
-
-		mPlayerSprite.DrawSprite(glm::vec2(200),glm::vec2(200),1.0f);
-        
-
+       
 		mGameWindow.Swap();
 	}
+
+	mPlayerSprite.Free();
 }
 
 void Application::Init()
 {
     mSquareMaterial = ::Material({ .Red = 0.23,.Green = 0.79,.Blue = 0.67 });
 
-	mPlayerSprite = ::OpenGLSprite(mSquareMaterial);
+	mPlayerSprite = ::OpenGLSprite();
+
+	mPlayerTransform = ::Transform(glm::vec2(100),glm::vec2(100));
+
+	mSpriteRenderer = ::OpenGLSpriteRenderer(mPlayerSprite, mPlayerTransform, mSquareMaterial);
 }

@@ -4,6 +4,7 @@
 #include "Render/Material.h"
 #include "Render/OpenGLSpriteRenderer.h"
 #include "Render/OpenGLSprite.h"
+#include "WorldTypes/Transform.h"
 
 class Application
 {
@@ -29,6 +30,9 @@ private:
 
 	// Sprites
 	::OpenGLSprite mPlayerSprite;
+
+	// Transforms
+	::Transform mPlayerTransform;
 
 };
 

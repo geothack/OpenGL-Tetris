@@ -1,36 +1,23 @@
 #include "Utility/PreLibrary.h"
 #include "OpenGLSprite.h"
 
-OpenGLSprite::OpenGLSprite(::Material& material) : mSpriteMaterial(&material)
+OpenGLSprite::OpenGLSprite() 
 {
 	Init();
 }
 
 OpenGLSprite::~OpenGLSprite()
 {
-	//::glDeleteVertexArrays(1, &mVAO);
 }
 
-void OpenGLSprite::DrawSprite(glm::vec2 position, glm::vec2 size, float rotate)
+uint32_t OpenGLSprite::GetVertexArray()
 {
-    mSpriteMaterial->Attach();
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(position, 0.0f));  
+    return mVAO;
+}
 
-    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); 
-    model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f)); 
-    model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); 
-
-    model = glm::scale(model, glm::vec3(size, 1.0f)); 
-
-    mSpriteMaterial->SetMat4("model", model);
-
-    //glActiveTexture(GL_TEXTURE0);
-    //texture.Bind();
-
-    glBindVertexArray(mVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glBindVertexArray(0);
+void OpenGLSprite::Free()
+{
+    ::glDeleteVertexArrays(1, &mVAO);
 }
 
 void OpenGLSprite::Init()
@@ -59,7 +46,5 @@ void OpenGLSprite::Init()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), static_cast<float>(600), 0.0f, -1.0f, 1.0f);
-
-    mSpriteMaterial->SetMat4("projection", projection);
+    
 }

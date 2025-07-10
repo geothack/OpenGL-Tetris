@@ -1,17 +1,16 @@
 #pragma once
 
-#include "Render/Material.h"
-
 class OpenGLSprite
 {
 public:
-    OpenGLSprite() = default;
-    OpenGLSprite(::Material& material);
+    OpenGLSprite();
     ~OpenGLSprite();
-    void DrawSprite(glm::vec2 position, glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotate = 0.0f);
+
+    uint32_t GetVertexArray();
+
+    void Free();
 
 private:
-    ::Material* mSpriteMaterial;
     ::uint32_t mVAO;
     void Init();
 };
