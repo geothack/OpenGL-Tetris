@@ -18,11 +18,11 @@ public:
 	Material(Color color);
 	~Material();
 
-	void Attach();
+	void Attach() const;
 
-	void SetVec3(std::string_view name, const glm::vec3& value);
+	void SetVec3(std::string_view name, const glm::vec3& value) const;
 
-	void SetMat4(std::string_view name, const glm::mat4& value);
+	void SetMat4(std::string_view name, const glm::mat4& value) const;
 
 private:
 	OpenGLShader mOpenGLShader;

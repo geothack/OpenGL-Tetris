@@ -13,13 +13,13 @@ public:
     void Attach() const;
 
 public:
-    void SetVec3(std::string_view name, const glm::vec3& value);
+    void SetVec3(std::string_view name, const glm::vec3& value) const;
 
-    void SetMat4(std::string_view name, const glm::mat4& value);
+    void SetMat4(std::string_view name, const glm::mat4& value) const;
 
-    void SetInt(std::string_view name, int value);
+    void SetInt(std::string_view name, int value) const;
 
-    void SetFloat(std::string_view name, float value);
+    void SetFloat(std::string_view name, float value) const;
 
 public:
     inline uint32_t GetProgram() const { return mProgram; }

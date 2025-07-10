@@ -61,7 +61,7 @@ void OpenGLShader::Attach() const
 	glUseProgram(mProgram);
 }
 
-void OpenGLShader::SetVec3(std::string_view name, const glm::vec3& value)
+void OpenGLShader::SetVec3(std::string_view name, const glm::vec3& value) const
 {
 	const auto uniform = mUniformCache.find(name.data());
 	const auto string = std::format("Failed to find uniform {}", name);
@@ -70,7 +70,7 @@ void OpenGLShader::SetVec3(std::string_view name, const glm::vec3& value)
 	::glUniform3fv(uniform->second, 1, &value[0]);
 }
 
-void OpenGLShader::SetMat4(std::string_view name, const glm::mat4& value)
+void OpenGLShader::SetMat4(std::string_view name, const glm::mat4& value) const
 {
 	const auto uniform = mUniformCache.find(name.data());
 	const auto string = std::format("Failed to find uniform {}", name);
@@ -79,7 +79,7 @@ void OpenGLShader::SetMat4(std::string_view name, const glm::mat4& value)
 	::glUniformMatrix4fv(uniform->second, 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void OpenGLShader::SetInt(std::string_view name, int value)
+void OpenGLShader::SetInt(std::string_view name, int value) const
 {
 	const auto uniform = mUniformCache.find(name.data());
 	const auto string = std::format("Failed to find uniform {}", name);
@@ -88,7 +88,7 @@ void OpenGLShader::SetInt(std::string_view name, int value)
 	::glUniform1i(uniform->second, value);
 }
 
-void OpenGLShader::SetFloat(std::string_view name, float value)
+void OpenGLShader::SetFloat(std::string_view name, float value) const
 {
 	const auto uniform = mUniformCache.find(name.data());
 	const auto string = std::format("Failed to find uniform {}", name);

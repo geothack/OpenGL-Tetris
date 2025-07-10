@@ -20,7 +20,6 @@ Window::Window(std::string_view title, const int width, const int height)
 
 	std::println("OpenGL Loaded with Version {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 
-	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glDebugMessageCallback(DebugLog, nullptr);
 

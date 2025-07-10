@@ -10,7 +10,7 @@ Material::~Material()
 {
 }
 
-void Material::Attach() 
+void Material::Attach() const
 {
 	mOpenGLShader.Attach();
 	mOpenGLShader.SetFloat("Red", mColor.Red);
@@ -18,12 +18,12 @@ void Material::Attach()
 	mOpenGLShader.SetFloat("Blue", mColor.Blue);
 }
 
-void Material::SetVec3(std::string_view name, const glm::vec3& value)
+void Material::SetVec3(std::string_view name, const glm::vec3& value) const
 {
 	mOpenGLShader.SetVec3(name, value);
 }
 
-void Material::SetMat4(std::string_view name, const glm::mat4& value)
+void Material::SetMat4(std::string_view name, const glm::mat4& value) const
 {
 	mOpenGLShader.SetMat4(name, value);
 }

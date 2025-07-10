@@ -8,6 +8,11 @@ public:
 	Window(std::string_view title, const int width, const int height);
 	~Window();
 
+	Window(const Window&) = delete;
+	Window& operator=(Window&&) = delete;
+	Window& operator=(const Window&) = delete;
+	Window(Window&&) = delete;
+
 	void Swap() const;
 
 	void Events();

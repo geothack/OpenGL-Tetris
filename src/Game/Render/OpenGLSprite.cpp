@@ -8,7 +8,7 @@ OpenGLSprite::OpenGLSprite(::Material& material) : mSpriteMaterial(&material)
 
 OpenGLSprite::~OpenGLSprite()
 {
-	glDeleteVertexArrays(1, &mVAO);
+	//::glDeleteVertexArrays(1, &mVAO);
 }
 
 void OpenGLSprite::DrawSprite(glm::vec2 position, glm::vec2 size, float rotate)
@@ -58,4 +58,8 @@ void OpenGLSprite::Init()
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), static_cast<float>(600), 0.0f, -1.0f, 1.0f);
+
+    mSpriteMaterial->SetMat4("projection", projection);
 }
