@@ -2,6 +2,8 @@
 
 #include "Window/Window.h"
 #include "Render/Material.h"
+#include "Render/OpenGLSpriteRenderer.h"
+#include "Render/OpenGLSprite.h"
 
 class Application
 {
@@ -18,11 +20,15 @@ private:
 private:
 	::Window mGameWindow;
 
+	::OpenGLSpriteRenderer mSpriteRenderer;
+
 	// Shaders
 
 	// Materials
 	::Material mSquareMaterial;
 
-	::uint32_t VAO;
+	// Sprites
+	::OpenGLSprite mPlayerSprite;
+
 };
 

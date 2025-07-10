@@ -8,8 +8,6 @@ public:
 	Window(std::string_view title, const int width, const int height);
 	~Window();
 
-	void Clear() const;
-
 	void Swap() const;
 
 	void Events();
@@ -17,6 +15,15 @@ public:
 public:
 	inline const bool const GetWindowIsOpen() const { return mWindowIsOpen; }
 
+private:
+	static void APIENTRY DebugLog(GLenum source,
+		GLenum type,
+		unsigned int id,
+		GLenum severity,
+		GLsizei length,
+		const char* message,
+		const void* userParam);
+	
 private:
 	::SDL_Window* mPlatformWindow;
 	::SDL_Event mWindowEvent;

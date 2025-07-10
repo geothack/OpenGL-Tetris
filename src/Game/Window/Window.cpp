@@ -20,6 +20,10 @@ Window::Window(std::string_view title, const int width, const int height)
 
 	std::println("OpenGL Loaded with Version {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 
+	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	glDebugMessageCallback(DebugLog, nullptr);
+
 	mWindowIsOpen = true;
 }
 
@@ -28,12 +32,6 @@ Window::~Window()
 	::SDL_GL_DestroyContext(mOpenGLContext);
 	::SDL_DestroyWindow(mPlatformWindow);
 	::SDL_Quit();
-}
-
-void Window::Clear() const
-{
-	::glClearColor(0.8, 0.5, 0.32, 1.0);
-	::glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Window::Swap() const
@@ -49,5 +47,31 @@ void Window::Events()
 		{
 			mWindowIsOpen = false;
 		}
+	}
+}
+
+void Window::DebugLog(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam)
+{
+	switch (severity)
+	{
+	case GL_DEBUG_SEVERITY_HIGH:
+		std::println("OpenGL Debug Severity High {}", message);
+		break;
+
+	case GL_DEBUG_SEVERITY_MEDIUM:
+		std::println("OpenGL Debug Severity Medium {}", message);
+		break;
+
+	case GL_DEBUG_SEVERITY_LOW:
+		std::println("OpenGL Debug Severity Low {}", message);
+		break;
+
+	case GL_DEBUG_SEVERITY_NOTIFICATION:
+		std::println("OpenGL Debug Severity Notification {}", message);
+		break;
+
+	default:
+
+		break;
 	}
 }

@@ -3,7 +3,7 @@
 
 Material::Material(Color color) : mColor(color)
 {
-	mOpenGLShader = OpenGLShader("res/Shaders/Basic.vert", "res/Shaders/Basic.frag");
+	mOpenGLShader = OpenGLShader("res/Shaders/Sprite.vert", "res/Shaders/Sprite.frag");
 }
 
 Material::~Material()
@@ -16,4 +16,14 @@ void Material::Attach()
 	mOpenGLShader.SetFloat("Red", mColor.Red);
 	mOpenGLShader.SetFloat("Green", mColor.Green);
 	mOpenGLShader.SetFloat("Blue", mColor.Blue);
+}
+
+void Material::SetVec3(std::string_view name, const glm::vec3& value)
+{
+	mOpenGLShader.SetVec3(name, value);
+}
+
+void Material::SetMat4(std::string_view name, const glm::mat4& value)
+{
+	mOpenGLShader.SetMat4(name, value);
 }

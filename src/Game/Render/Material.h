@@ -20,6 +20,10 @@ public:
 
 	void Attach();
 
+	void SetVec3(std::string_view name, const glm::vec3& value);
+
+	void SetMat4(std::string_view name, const glm::mat4& value);
+
 private:
 	OpenGLShader mOpenGLShader;
 
