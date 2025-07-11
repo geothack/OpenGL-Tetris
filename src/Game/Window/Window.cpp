@@ -1,6 +1,7 @@
 #include "Utility/PreLibrary.h"
 #include "Window.h"
 #include "Utility/Verify.h"
+#include "Input/Input.h"
 
 Window::Window(std::string_view title, const int width, const int height)
 {
@@ -48,6 +49,13 @@ void Window::Events()
 		if (mWindowEvent.type == ::SDL_EVENT_QUIT)
 		{
 			mWindowIsOpen = false;
+		}
+
+		Input::Get()->UpdateKeys();
+
+		if (Input::Get()->KeyPressed("A"))
+		{
+			std::println("A was pressed");
 		}
 	}
 }
