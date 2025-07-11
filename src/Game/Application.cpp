@@ -34,4 +34,6 @@ void Application::Init()
 	mPlayerTransform = ::Transform(glm::vec2(100),glm::vec2(100));
 
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mPlayerSprite, mPlayerTransform, mSquareMaterial);
+
+	mPlayer = mMainScene.CreateEntity(mPlayerTransform);
 }

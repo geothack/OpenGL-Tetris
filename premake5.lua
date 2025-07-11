@@ -12,7 +12,7 @@ project "OpenGLTetris"
 
     architecture ("x64")
 
-    includedirs { "libs/sdl3/include", "src/Game", "libs/glad/glad/include", "libs/glm" }
+    includedirs { "libs/sdl3/include", "src/Game", "libs/glad/glad/include", "libs/glm", "libs/entt" }
 
     libdirs { "libs/sdl3/lib/x64" }
 

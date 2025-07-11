@@ -34,5 +34,11 @@ private:
 	// Transforms
 	::Transform mPlayerTransform;
 
+	// Scenes
+	::Scene mMainScene;
+
+
+	// Entities
+	::Entity* mPlayer;
 };
 

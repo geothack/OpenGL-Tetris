@@ -10,6 +10,8 @@
 
 #include <SDL3/SDL.h>
 
+#include <entt/entt.hpp>
+
 // Standard Libs
 
 #include <string_view>
@@ -27,4 +29,6 @@
 // Classes
 
 #include "Render/Renderer.h"
+
+#include "WorldTypes/Entity.h"
 
