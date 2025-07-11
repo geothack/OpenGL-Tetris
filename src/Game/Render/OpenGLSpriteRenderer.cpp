@@ -18,10 +18,6 @@ void OpenGLSpriteRenderer::Update()
 
     mMaterial->SetMat4("model", *mTransform->GetWorldLocation());
 
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), static_cast<float>(600), 0.0f, -1.0f, 1.0f);
-
-    mMaterial->SetMat4("projection", projection);
-
 
     glBindVertexArray(mSprite->GetVertexArray());
     glDrawArrays(GL_TRIANGLES, 0, 6);

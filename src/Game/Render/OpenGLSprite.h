@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Render/OpenGLUniformBuffer.h"
+
 class OpenGLSprite
 {
 public:
@@ -11,7 +13,18 @@ public:
     void Free();
 
 private:
-    ::uint32_t mVAO;
     void Init();
+
+private:
+    ::uint32_t mVAO;
+
+    struct Camera
+    {
+        alignas(16) glm::mat4 Projection;
+    };
+
+    Camera mCameraData;
+
+    OpenGLUniformBuffer mOpenGLUniformBuffer;
 };
 

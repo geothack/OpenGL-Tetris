@@ -46,5 +46,8 @@ void OpenGLSprite::Init()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    
+    mCameraData.Projection = glm::ortho(0.0f, static_cast<float>(800), static_cast<float>(600), 0.0f, -1.0f, 1.0f);
+
+    mOpenGLUniformBuffer.Init<Camera>(mCameraData);
+    mOpenGLUniformBuffer.Update<Camera>(mCameraData, mCameraData.Projection);
 }
