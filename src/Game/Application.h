@@ -33,7 +33,19 @@ private:
 	Player mPlayer;
 
 	// Blocks
-	std::array<Block, 3> mBlockArray;
+	std::array<Block, 30> mBlockArray;
+
+	enum class BlockColor
+	{
+		None = -1,
+		Green,
+		Red,
+		Blue,
+		Yellow,
+		Orange,
+		Purple
+	};
+
 
 };
 

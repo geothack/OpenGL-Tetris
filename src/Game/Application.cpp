@@ -3,7 +3,7 @@
 #include "Utility/EntityRuntimeCache.h"
 #include "Utility/ResourceCache.h"
 
-Application::Application() : mGameWindow(Window("Tetris",800,600))
+Application::Application() : mGameWindow(Window("Breakout",800,600))
 {
 	Init();
 	Update();
@@ -47,20 +47,53 @@ void Application::Init()
 
 	RuntimeCache->Add(mPlayer);
 
-	for (auto i = 0; i < 3; i++)
+	auto color = 0;
+	for (auto i = 0; i < 30; i++)
 	{
-		Cache->Insert<Material>("Block" + std::to_string(i), ::Material({.Red = 0.25, .Green = 0.95, .Blue = 0.23}));
+		if (color >= 6)
+		{
+			color = 0;
+		}
+	
+		switch ((BlockColor)color)
+		{
+			using enum BlockColor;
+		case Green:
+			Cache->Insert<Material>("Block" + std::to_string(i), ::Material({ .Red = 0.25, .Green = 0.95, .Blue = 0.23 }));
+			break;
+		case Red:
+			Cache->Insert<Material>("Block" + std::to_string(i), ::Material({ .Red = 1.0, .Green = 0.0, .Blue = 0.0 }));
+			break;
+		case Blue:
+			Cache->Insert<Material>("Block" + std::to_string(i), ::Material({ .Red = 0.0, .Green = 0.0, .Blue = 1.0 }));
+			break;
+		case Yellow:
+			Cache->Insert<Material>("Block" + std::to_string(i), ::Material({ .Red = 0.85, .Green = 0.68, .Blue = 0.23 }));
+			break;
+		case Orange:
+			Cache->Insert<Material>("Block" + std::to_string(i), ::Material({ .Red = 1.0, .Green = 0.0, .Blue = 1.0 }));
+			break;
+		case Purple:
+			Cache->Insert<Material>("Block" + std::to_string(i), ::Material({ .Red = 1.0, .Green = 1.0, .Blue = 0.0 }));
+			break;
+		}
+		color++;
 	}
 	
 	auto xPos = 10;
-	auto yPos = 50;
-	for (auto i = 0; i < 3; i++)
+	auto yPos = -40;
+	for (auto i = 0; i < 30; i++)
 	{
+		if (i % 10 == 0)
+		{
+			xPos = 10;
+			yPos += 50;
+		}
 		Cache->Insert<Transform>("Block" + std::to_string(i), ::Transform(glm::vec2(xPos, yPos), glm::vec2(60, 30)));
 		xPos += 80;
 	}
 
-	for (auto i = 0; i < 3; i++)
+	for (auto i = 0; i < 30; i++)
 	{
 		static_cast<Entity&>(mBlockArray[i]) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Block" + std::to_string(i)), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<Material>("Block" + std::to_string(i)));
 
