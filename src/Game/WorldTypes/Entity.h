@@ -21,7 +21,7 @@ public:
 	template<typename T>
 	bool HasComponent()
 	{
-		return mScene->GetRegister().any_of<T>(mHandle);
+		return mScene->GetRegister()->any_of<T>(mHandle);
 	}
 
 	template<typename T, typename ... Args>
@@ -31,7 +31,7 @@ public:
 		{
 			Verify::Update("Entity already has component", 0);
 		}
-		return &mScene->GetRegister().emplace<T>(mHandle, std::forward<Args>(args)...);
+		return &mScene->GetRegister()->emplace<T>(mHandle, std::forward<Args>(args)...);
 	}
 
 	template<typename T>
@@ -42,7 +42,7 @@ public:
 			Verify::Update("Entity does not have component", 0);
 		}
 
-		return &mScene->GetRegister().get<T>(mHandle);
+		return &mScene->GetRegister()->get<T>(mHandle);
 	}
 
 	template<typename T>
@@ -53,10 +53,10 @@ public:
 			Verify::Update("Entity does not have component", 0);
 		}
 
-		mScene->GetRegister().erase<T>(mHandle);
+		mScene->GetRegister()->erase<T>(mHandle);
 	}
 
-	Transform* GetWorldTransform() 
+	Transform* GetEntityTransform() 
 	{ 
 		if (!HasComponent<Transform>())
 		{
@@ -66,10 +66,52 @@ public:
 		return GetComponent<Transform>(); 
 	}
 
-	inline const ::entt::handle GetHandle() { return mHandle; }
+	glm::vec2* GetEntityPosition()
+	{
+		if (!HasComponent<Transform>())
+		{
+			Verify::Update("Entity does not have transform component", 0);
+		}
+
+		return GetComponent<Transform>()->GetPosition();
+	}
+
+	void SetEntityPosition(const glm::vec2& position)
+	{
+		if (!HasComponent<Transform>())
+		{
+			Verify::Update("Entity does not have transform component", 0);
+		}
+
+		GetComponent<Transform>()->UpdatePosition(position);
+	}
+
+	float GetEntityRotation()
+	{
+		if (!HasComponent<Transform>())
+		{
+			Verify::Update("Entity does not have transform component", 0);
+		}
+
+		return GetComponent<Transform>()->GetRotation();
+	}
+
+	void SetEntityRotation(const float rotation)
+	{
+		if (!HasComponent<Transform>())
+		{
+			Verify::Update("Entity does not have transform component", 0);
+		}
+
+		GetComponent<Transform>()->UpdateRotation(rotation);
+	}
+
+	//inline const ::entt::entity GetHandle() { return mHandle; }
 
 private:
-	::entt::handle mHandle;
+	::entt::entity mHandle;
 	Scene* mScene;
+
+	inline static int mCacheHandle = 0;
 };
 

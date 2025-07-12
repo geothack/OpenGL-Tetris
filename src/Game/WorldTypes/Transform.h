@@ -7,6 +7,9 @@ public:
 	Transform(const glm::vec2& position, const glm::vec2& size, const float rotation = 0.0f);
 
 	glm::mat4* GetWorldLocation();
+	glm::vec2* GetPosition();
+	glm::vec2* GetSize();
+	float GetRotation();
 
 	void UpdatePosition(const glm::vec2& position);
 	void UpdateSize(const glm::vec2& size);

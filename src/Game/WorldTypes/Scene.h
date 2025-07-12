@@ -9,10 +9,10 @@ class Scene
 public:
 	Scene() = default;
 
-	Entity* CreateEntity(Transform& transform);
+	Entity CreateEntity(Transform& transform);
 
 	
-	inline ::entt::registry& GetRegister() { return mRegistry; }
+	inline ::entt::registry* GetRegister() { return &mRegistry; }
 
 private:
 	::entt::registry mRegistry;

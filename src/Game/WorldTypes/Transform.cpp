@@ -11,6 +11,21 @@ glm::mat4* Transform::GetWorldLocation()
 	return &mWorldLocation;
 }
 
+glm::vec2* Transform::GetPosition()
+{
+	return &mPosition;
+}
+
+glm::vec2* Transform::GetSize()
+{
+	return &mSize;
+}
+
+float Transform::GetRotation()
+{
+	return mRotation;
+}
+
 void Transform::UpdatePosition(const glm::vec2& position)
 {
 	mPosition = position;

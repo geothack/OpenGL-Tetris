@@ -1,5 +1,6 @@
 #include "Utility/PreLibrary.h"
 #include "Application.h"
+#include "Utility/EntityRuntimeCache.h"
 
 Application::Application() : mGameWindow(Window("Tetris",800,600))
 {
@@ -18,11 +19,14 @@ void Application::Update()
 		mGameWindow.Events();
 
 		mSpriteRenderer.Update();
+
+		EntityRuntimeCache::Get()->Update();
        
 		mGameWindow.Swap();
 	}
 
 	mPlayerSprite.Free();
+	EntityRuntimeCache::Get()->Free();
 }
 
 void Application::Init()
@@ -33,7 +37,13 @@ void Application::Init()
 
 	mPlayerTransform = ::Transform(glm::vec2(100),glm::vec2(100));
 
-	mSpriteRenderer = ::OpenGLSpriteRenderer(mPlayerSprite, mPlayerTransform, mSquareMaterial);
+	Entity& playerEntity = mPlayer;
 
-	mPlayer = mMainScene.CreateEntity(mPlayerTransform);
+	playerEntity = mMainScene.CreateEntity(mPlayerTransform);
+	playerEntity.AddComponent<OpenGLSprite>(mPlayerSprite);
+	playerEntity.AddComponent<Material>(mSquareMaterial);
+
+	EntityRuntimeCache::Get()->Add(playerEntity);
+
+	mSpriteRenderer = ::OpenGLSpriteRenderer(mPlayer);
 }

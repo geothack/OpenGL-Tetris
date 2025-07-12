@@ -6,6 +6,8 @@
 #include "Render/OpenGLSprite.h"
 #include "WorldTypes/Transform.h"
 
+#include "Gameplay/Player.h"
+
 class Application
 {
 public:
@@ -37,8 +39,7 @@ private:
 	// Scenes
 	::Scene mMainScene;
 
-
-	// Entities
-	::Entity* mPlayer;
+	// Player
+	Player mPlayer;
 };
 
