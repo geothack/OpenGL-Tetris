@@ -1,9 +1,9 @@
 
-workspace "OpenGLTetris"
+workspace "OpenGLBreakout"
     configurations {"Debug","Release"}
     
 
-project "OpenGLTetris"
+project "OpenGLBreakout"
     kind "ConsoleApp"
 
     language "C++"

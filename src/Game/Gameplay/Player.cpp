@@ -13,24 +13,14 @@ void Player::BeginPlay()
 
 void Player::Update()
 {
-	if (GInput->KeyPressedDown("A"))
+	if (GInput->KeyPressedDown("A") && GetEntityPosition()->x > 0)
 	{
 		SetEntityPosition(glm::vec2(GetEntityPosition()->x - 1,GetEntityPosition()->y));
 	}
 
-	if (GInput->KeyPressedDown("D"))
+	if (GInput->KeyPressedDown("D") && GetEntityPosition()->x < 720)
 	{
 		SetEntityPosition(glm::vec2(GetEntityPosition()->x + 1, GetEntityPosition()->y));
-	}
-
-	if (GInput->KeyPressedDown("W"))
-	{
-		SetEntityPosition(glm::vec2(GetEntityPosition()->x, GetEntityPosition()->y - 1));
-	}
-
-	if (GInput->KeyPressedDown("S"))
-	{
-		SetEntityPosition(glm::vec2(GetEntityPosition()->x, GetEntityPosition()->y + 1));
 	}
 
 }
