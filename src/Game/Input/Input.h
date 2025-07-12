@@ -10,6 +10,8 @@ public:
 	void UpdateKeys();
 
 	bool KeyPressed(std::string_view keyName);
+	bool KeyPressedDown(std::string_view keyName);
+	bool KeyPressedUp(std::string_view keyName);
 
 	void Free();
 

@@ -28,6 +28,8 @@
 
 // Classes
 
+#include "Utility/GameCore.h"
+
 #include "Render/Renderer.h"
 
 #include "WorldTypes/Entity.h"

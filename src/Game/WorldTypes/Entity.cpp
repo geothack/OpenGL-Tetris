@@ -3,4 +3,6 @@
 
 Entity::Entity(::entt::entity entity, Scene& scene) : mScene(&scene), mHandle(entity)
 {
+	mEntityCacheHandle = mCacheHandle;
+	mCacheHandle++;
 }

@@ -21,6 +21,16 @@ bool Input::KeyPressed(std::string_view keyName)
 	return mKeyboard.KeyPressed(keyName);
 }
 
+bool Input::KeyPressedDown(std::string_view keyName)
+{
+	return mKeyboard.KeyPressedDown(keyName);
+}
+
+bool Input::KeyPressedUp(std::string_view keyName)
+{
+	return mKeyboard.KeyPressedUp(keyName);
+}
+
 void Input::Free()
 {
 	delete mInput;

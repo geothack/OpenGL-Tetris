@@ -108,10 +108,13 @@ public:
 
 	//inline const ::entt::entity GetHandle() { return mHandle; }
 
+	inline const int GetEntityCacheHandle() { return mEntityCacheHandle; }
+
 private:
 	::entt::entity mHandle;
 	Scene* mScene;
 
 	inline static int mCacheHandle = 0;
+	int mEntityCacheHandle;
 };
 

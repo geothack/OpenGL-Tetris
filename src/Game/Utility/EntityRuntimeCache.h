@@ -6,9 +6,11 @@ class EntityRuntimeCache
 public:
 	static EntityRuntimeCache* Get();
 
-	void Add(Entity& entity)
+	template<class T>
+	void Add(T& object)
 	{
-		mEntityCache.emplace_back(&entity);
+		Entity* entityBase = &object;
+		mEntityCache.emplace_back(entityBase);
 	}
 
 	void BeginPlay()
@@ -29,6 +31,22 @@ public:
 			if (entityBase)
 			{
 				entityBase->Update();
+			}
+		}
+	}
+
+	void Free(const int handle)
+	{
+		for (auto it = mEntityCache.begin(); it != mEntityCache.end(); )
+		{
+			if ((*it)->GetEntityCacheHandle() == handle)
+			{	             
+				it = mEntityCache.erase(it); 
+				//delete* it;
+			}
+			else
+			{
+				it++; 
 			}
 		}
 	}

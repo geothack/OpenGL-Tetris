@@ -51,12 +51,7 @@ void Window::Events()
 			mWindowIsOpen = false;
 		}
 
-		Input::Get()->UpdateKeys();
-
-		if (Input::Get()->KeyPressed("A"))
-		{
-			std::println("A was pressed");
-		}
+		GInput->UpdateKeys();
 	}
 }
 

@@ -20,13 +20,13 @@ void Application::Update()
 
 		mSpriteRenderer.Update();
 
-		EntityRuntimeCache::Get()->Update();
+		RuntimeCache->Update();
        
 		mGameWindow.Swap();
 	}
 
 	mPlayerSprite.Free();
-	EntityRuntimeCache::Get()->Free();
+	RuntimeCache->Free();
 }
 
 void Application::Init()
@@ -37,13 +37,12 @@ void Application::Init()
 
 	mPlayerTransform = ::Transform(glm::vec2(100),glm::vec2(100));
 
-	Entity& playerEntity = mPlayer;
+	
+	static_cast<Entity&>(mPlayer) = mMainScene.CreateEntity(mPlayerTransform);
+	mPlayer.AddComponent<OpenGLSprite>(mPlayerSprite);
+	mPlayer.AddComponent<Material>(mSquareMaterial);
 
-	playerEntity = mMainScene.CreateEntity(mPlayerTransform);
-	playerEntity.AddComponent<OpenGLSprite>(mPlayerSprite);
-	playerEntity.AddComponent<Material>(mSquareMaterial);
-
-	EntityRuntimeCache::Get()->Add(playerEntity);
+	RuntimeCache->Add(mPlayer);
 
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mPlayer);
 }
