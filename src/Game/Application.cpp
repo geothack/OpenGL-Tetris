@@ -38,14 +38,34 @@ void Application::Init()
 {
 
 	Cache->Insert<Material>("Player", ::Material({ .Red = 0.25, .Green = 0.35, .Blue = 1.0 }));
-	
-	Cache->Insert<OpenGLSprite>("Player", ::OpenGLSprite());
+
+	Cache->Insert<OpenGLSprite>("Square", ::OpenGLSprite());
 
 	Cache->Insert<Transform>("Player", ::Transform(glm::vec2(360,550), glm::vec2(80,20)));
 
-	static_cast<Entity&>(mPlayer) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Player"), *Cache->Find<OpenGLSprite>("Player"), *Cache->Find<Material>("Player"));
+	static_cast<Entity&>(mPlayer) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Player"), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<Material>("Player"));
 
 	RuntimeCache->Add(mPlayer);
+
+	for (auto i = 0; i < 3; i++)
+	{
+		Cache->Insert<Material>("Block" + std::to_string(i), ::Material({.Red = 0.25, .Green = 0.95, .Blue = 0.23}));
+	}
+	
+	auto xPos = 10;
+	auto yPos = 50;
+	for (auto i = 0; i < 3; i++)
+	{
+		Cache->Insert<Transform>("Block" + std::to_string(i), ::Transform(glm::vec2(xPos, yPos), glm::vec2(60, 30)));
+		xPos += 80;
+	}
+
+	for (auto i = 0; i < 3; i++)
+	{
+		static_cast<Entity&>(mBlockArray[i]) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Block" + std::to_string(i)), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<Material>("Block" + std::to_string(i)));
+
+		RuntimeCache->Add(mBlockArray[i]);
+	}
 
 
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);

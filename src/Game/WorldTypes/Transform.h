@@ -15,6 +15,8 @@ public:
 	void UpdateSize(const glm::vec2& size);
 	void UpdateRotation(const float rotation);
 
+	bool HasCollided(Transform& other);
+
 private:
 	void CalculateTransform();
 

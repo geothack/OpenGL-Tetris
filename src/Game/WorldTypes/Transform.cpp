@@ -44,6 +44,19 @@ void Transform::UpdateRotation(const float rotation)
 	CalculateTransform();
 }
 
+bool Transform::HasCollided(Transform& other)
+{
+	if (mPosition.x < other.GetPosition()->x + other.GetSize()->x &&
+		mPosition.x + mSize.x > other.GetPosition()->x &&
+		mPosition.y < other.GetPosition()->y + other.GetSize()->y &&
+		mPosition.y + mSize.y > other.GetPosition()->y)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void Transform::CalculateTransform()
 {
 	mWorldLocation = glm::mat4(1.0f);

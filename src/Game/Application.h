@@ -7,6 +7,7 @@
 #include "WorldTypes/Transform.h"
 
 #include "Gameplay/Player.h"
+#include "Gameplay/Block.h"
 
 class Application
 {
@@ -30,6 +31,9 @@ private:
 
 	// Player
 	Player mPlayer;
+
+	// Blocks
+	std::array<Block, 3> mBlockArray;
 
 };
 
