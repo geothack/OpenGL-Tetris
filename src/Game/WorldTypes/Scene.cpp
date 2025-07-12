@@ -8,3 +8,12 @@ Entity Scene::CreateEntity(Transform& transform)
 	entity.AddComponent<Transform>(transform);
 	return entity;
 }
+
+Entity Scene::CreateSpriteEntity(Transform& transform, OpenGLSprite& sprite, Material& material)
+{
+	auto entity = Entity(mRegistry.create(), *this);
+	entity.AddComponent<Transform>(transform);
+	entity.AddComponent<OpenGLSprite>(sprite);
+	entity.AddComponent<Material>(material);
+	return entity;
+}

@@ -6,12 +6,12 @@ class OpenGLSpriteRenderer : public Renderer
 {
 public:
 	OpenGLSpriteRenderer() = default;
-	OpenGLSpriteRenderer(Entity& player);
+	OpenGLSpriteRenderer(Scene& scene);
 	~OpenGLSpriteRenderer() override;
 
 	void Update() override;
 
 private:
-	Entity* mPlayer;
+	Scene* mScene;
 };
 

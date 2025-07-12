@@ -110,11 +110,14 @@ public:
 
 	inline const int GetEntityCacheHandle() { return mEntityCacheHandle; }
 
+	bool HasRunBeginPlay = false;
+
 private:
 	::entt::entity mHandle;
 	Scene* mScene;
 
 	inline static int mCacheHandle = 0;
 	int mEntityCacheHandle;
+
 };
 

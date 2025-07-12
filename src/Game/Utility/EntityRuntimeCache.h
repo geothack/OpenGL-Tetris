@@ -13,43 +13,14 @@ public:
 		mEntityCache.emplace_back(entityBase);
 	}
 
-	void BeginPlay()
+	void AddEntity(Entity& entity)
 	{
-		for (auto* entityBase : mEntityCache)
-		{
-			if (entityBase)
-			{
-				entityBase->BeginPlay();
-			}
-		}
+		mEntityCache.emplace_back(&entity);
 	}
 
-	void Update()
-	{
-		for (auto* entityBase : mEntityCache)
-		{
-			if (entityBase)
-			{
-				entityBase->Update();
-			}
-		}
-	}
+	void Update();
 
-	void Free(const int handle)
-	{
-		for (auto it = mEntityCache.begin(); it != mEntityCache.end(); )
-		{
-			if ((*it)->GetEntityCacheHandle() == handle)
-			{	             
-				it = mEntityCache.erase(it); 
-				//delete* it;
-			}
-			else
-			{
-				it++; 
-			}
-		}
-	}
+	void Free(const int handle);
 
 	void Free();
 

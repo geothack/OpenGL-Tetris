@@ -4,9 +4,9 @@
 #include "WorldTypes/Transform.h"
 #include "Render/OpenGLSprite.h"
 
-OpenGLSpriteRenderer::OpenGLSpriteRenderer(Entity& player) : mPlayer(&player)
+OpenGLSpriteRenderer::OpenGLSpriteRenderer(Scene& scene) : mScene(&scene)
 {
-	::glClearColor(0.5, 0.0, 0.0, 1.0);
+	::glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
 OpenGLSpriteRenderer::~OpenGLSpriteRenderer()
@@ -17,12 +17,17 @@ void OpenGLSpriteRenderer::Update()
 {
 	::glClear(GL_COLOR_BUFFER_BIT);
 
-    mPlayer->GetComponent<Material>()->Attach();
+    auto view = mScene->GetRegister()->view<Transform, OpenGLSprite, Material>();
 
-    mPlayer->GetComponent<Material>()->SetMat4("model", *mPlayer->GetComponent<Transform>()->GetWorldLocation());
+    for (auto [entity,transform,sprite,material] : view.each())
+    { 
+        material.Attach();
 
+        material.SetMat4("model", *transform.GetWorldLocation());
 
-    glBindVertexArray(mPlayer->GetComponent<OpenGLSprite>()->GetVertexArray());
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glBindVertexArray(0);
+        glBindVertexArray(sprite.GetVertexArray());
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+    }
+
 }

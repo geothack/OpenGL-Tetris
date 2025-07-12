@@ -25,21 +25,13 @@ private:
 
 	::OpenGLSpriteRenderer mSpriteRenderer;
 
-	// Shaders
-
-	// Materials
-	::Material mSquareMaterial;
-
-	// Sprites
-	::OpenGLSprite mPlayerSprite;
-
-	// Transforms
-	::Transform mPlayerTransform;
-
 	// Scenes
 	::Scene mMainScene;
 
 	// Player
 	Player mPlayer;
+
+	// Entities
+	std::array<Entity, 200> mTetrisBoard;
 };
 
