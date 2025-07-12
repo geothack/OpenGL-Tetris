@@ -14,6 +14,7 @@
 
 // Standard Libs
 
+#include <algorithm>
 #include <string_view>
 #include <filesystem>
 #include <memory>

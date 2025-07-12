@@ -7,6 +7,7 @@
 #include "WorldTypes/Transform.h"
 
 #include "Gameplay/Player.h"
+#include "Gameplay/Piece.h"
 
 class Application
 {
@@ -30,6 +31,9 @@ private:
 
 	// Player
 	Player mPlayer;
+
+	// Pieces
+	Piece mLine;
 
 	// Entities
 	std::array<Entity, 200> mTetrisBoard;

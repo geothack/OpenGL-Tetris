@@ -3,10 +3,10 @@
 class Verify
 {
 public:
-	static bool Update(std::string_view message, int value);
+	static void Update(std::string_view message, int value);
 
 	template<typename T>
-	static bool Update(std::string_view message, T* var)
+	static void Update(std::string_view message, T* var)
 	{
 		if (!var)
 		{

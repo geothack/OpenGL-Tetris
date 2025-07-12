@@ -27,3 +27,8 @@ void Material::SetMat4(std::string_view name, const glm::mat4& value) const
 {
 	mOpenGLShader.SetMat4(name, value);
 }
+
+void Material::UpdateColor(Color color)
+{
+	mColor = color;
+}
