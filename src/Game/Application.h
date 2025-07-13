@@ -4,10 +4,12 @@
 #include "Render/Material.h"
 #include "Render/OpenGLSpriteRenderer.h"
 #include "Render/OpenGLSprite.h"
+#include "Render/OpenGLTexture.h"
 #include "WorldTypes/Transform.h"
 
 #include "Gameplay/Player.h"
 #include "Gameplay/Block.h"
+#include "Gameplay/Ball.h"
 
 class Application
 {
@@ -31,6 +33,9 @@ private:
 
 	// Player
 	Player mPlayer;
+
+	// Ball
+	Ball mBall;
 
 	// Blocks
 	std::array<Block, 30> mBlockArray;

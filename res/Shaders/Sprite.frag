@@ -2,6 +2,8 @@
 
 out vec4 color;
 
+in vec2 TexCoords;
+
 uniform float Red;
 uniform float Green;
 uniform float Blue;

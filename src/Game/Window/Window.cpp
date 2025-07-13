@@ -10,7 +10,7 @@ Window::Window(std::string_view title, const int width, const int height)
 	Verify::Update("Failed to initialize sdl3. ", success);
 
 	// Set to use Render Doc!!!
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	mPlatformWindow = ::SDL_CreateWindow(title.data(), width, height, SDL_WINDOW_OPENGL);
 

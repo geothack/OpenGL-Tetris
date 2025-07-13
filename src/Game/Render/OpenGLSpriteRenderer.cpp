@@ -3,6 +3,7 @@
 #include "Render/Material.h"
 #include "WorldTypes/Transform.h"
 #include "Render/OpenGLSprite.h"
+#include "Render/OpenGLTexture.h"
 
 OpenGLSpriteRenderer::OpenGLSpriteRenderer(Scene& scene) : mScene(&scene)
 {
@@ -24,6 +25,24 @@ void OpenGLSpriteRenderer::Update()
         material.Attach();
 
         material.SetMat4("model", *transform.GetWorldLocation());
+
+        glBindVertexArray(sprite.GetVertexArray());
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+    }
+
+    auto shaderView = mScene->GetRegister()->view<Transform, OpenGLSprite, OpenGLShader,OpenGLTexture>();
+
+    for (auto [entity, transform, sprite, shader,texture] : shaderView.each())
+    {
+        shader.Attach();
+        //glActiveTexture(GL_TEXTURE0);
+        glBindTextureUnit(0, texture.GetHandle());
+        //texture.Attach();
+
+        shader.SetMat4("model", *transform.GetWorldLocation());
+        auto Projection = glm::ortho(0.0f, static_cast<float>(800), static_cast<float>(600), 0.0f, -1.0f, 1.0f);
+        shader.SetMat4("projection", Projection);
 
         glBindVertexArray(sprite.GetVertexArray());
         glDrawArrays(GL_TRIANGLES, 0, 6);

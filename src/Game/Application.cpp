@@ -48,13 +48,9 @@ void Application::Init()
 	RuntimeCache->Add(mPlayer);
 
 	auto color = 0;
-	for (auto i = 0; i < 30; i++)
+
+	for (auto i = 0; i < 6; i++)
 	{
-		if (color >= 6)
-		{
-			color = 0;
-		}
-	
 		switch ((BlockColor)color)
 		{
 			using enum BlockColor;
@@ -79,7 +75,8 @@ void Application::Init()
 		}
 		color++;
 	}
-	
+	color = 0;
+
 	auto xPos = 10;
 	auto yPos = -40;
 	for (auto i = 0; i < 30; i++)
@@ -95,11 +92,24 @@ void Application::Init()
 
 	for (auto i = 0; i < 30; i++)
 	{
-		static_cast<Entity&>(mBlockArray[i]) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Block" + std::to_string(i)), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<Material>("Block" + std::to_string(i)));
+		if (color >= 6)
+		{
+			color = 0;
+		}
+		static_cast<Entity&>(mBlockArray[i]) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Block" + std::to_string(i)), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<Material>("Block" + std::to_string(color)));
 
 		RuntimeCache->Add(mBlockArray[i]);
+		color++;
 	}
 
+	Cache->Insert<Transform>("Ball", ::Transform(glm::vec2(375,275),glm::vec2(50)));
+	Cache->Insert<OpenGLTexture>("Ball", ::OpenGLTexture("res/Textures/circle.png"));
+	Cache->Insert<OpenGLShader>("Ball", ::OpenGLShader("res/Shaders/SpriteTextured.vert", "res/Shaders/SpriteTextured.frag"));
+
+	static_cast<Entity&>(mBall) = mMainScene.CreateShaderSpriteEntity(*Cache->Find<Transform>("Ball"), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<OpenGLShader>("Ball"));
+	mBall.AddComponent<OpenGLTexture>(*Cache->Find<OpenGLTexture>("Ball"));
+
+	RuntimeCache->Add(mBall);
 
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);
 }

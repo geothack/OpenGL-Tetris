@@ -13,6 +13,7 @@ public:
 
 	Entity CreateEntity(Transform& transform);
 	Entity CreateSpriteEntity(Transform& transform, OpenGLSprite& sprite, Material& material);
+	Entity CreateShaderSpriteEntity(Transform& transform, OpenGLSprite& sprite, OpenGLShader& shader);
 
 	
 	inline ::entt::registry* GetRegister() { return &mRegistry; }

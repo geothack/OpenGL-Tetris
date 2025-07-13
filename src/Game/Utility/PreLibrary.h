@@ -12,6 +12,8 @@
 
 #include <entt/entt.hpp>
 
+#include "stb_image.h"
+
 // Standard Libs
 
 #include <algorithm>
