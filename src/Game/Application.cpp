@@ -36,7 +36,7 @@ void Application::Update()
 
 void Application::Init()
 {
-
+	mPlayer = Player(mBall);
 	Cache->Insert<Material>("Player", ::Material({ .Red = 0.25, .Green = 0.35, .Blue = 1.0 }));
 
 	Cache->Insert<OpenGLSprite>("Square", ::OpenGLSprite());
@@ -102,7 +102,9 @@ void Application::Init()
 		color++;
 	}
 
-	Cache->Insert<Transform>("Ball", ::Transform(glm::vec2(375,275),glm::vec2(50)));
+	mBall = Ball(static_cast<Entity&>(mPlayer));
+
+	Cache->Insert<Transform>("Ball", ::Transform(glm::vec2(385,500),glm::vec2(30)));
 	Cache->Insert<OpenGLTexture>("Ball", ::OpenGLTexture("res/Textures/circle.png"));
 	Cache->Insert<OpenGLShader>("Ball", ::OpenGLShader("res/Shaders/SpriteTextured.vert", "res/Shaders/SpriteTextured.frag"));
 

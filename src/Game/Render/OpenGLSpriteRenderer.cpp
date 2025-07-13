@@ -36,9 +36,7 @@ void OpenGLSpriteRenderer::Update()
     for (auto [entity, transform, sprite, shader,texture] : shaderView.each())
     {
         shader.Attach();
-        //glActiveTexture(GL_TEXTURE0);
         glBindTextureUnit(0, texture.GetHandle());
-        //texture.Attach();
 
         shader.SetMat4("model", *transform.GetWorldLocation());
         auto Projection = glm::ortho(0.0f, static_cast<float>(800), static_cast<float>(600), 0.0f, -1.0f, 1.0f);

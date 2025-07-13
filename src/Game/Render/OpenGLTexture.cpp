@@ -11,7 +11,7 @@ OpenGLTexture::OpenGLTexture(const std::filesystem::path& path, bool flip)
     unsigned char* data = stbi_load(pathString.c_str(), &mWidth, &mHeight, &mChannels, 0);
     if (data)
     {
-        uint32_t format = 0;
+        uint32_t format;
         if (mChannels == 1)
         {
             format = GL_RED;
