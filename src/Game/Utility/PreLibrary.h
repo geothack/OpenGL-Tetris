@@ -14,6 +14,8 @@
 
 #include "stb_image.h"
 
+#include "freetype/freetype.h"
+
 // Standard Libs
 
 #include <algorithm>
@@ -28,6 +30,7 @@
 #include <stacktrace>
 #include <print>
 #include <stdexcept>
+#include <random>
 
 // Classes
 

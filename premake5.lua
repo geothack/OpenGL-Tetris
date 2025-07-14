@@ -12,11 +12,11 @@ project "OpenGLBreakout"
 
     architecture ("x64")
 
-    includedirs { "libs/sdl3/include", "src/Game", "libs/glad/glad/include", "libs/glm", "libs/entt" }
+    includedirs { "libs/sdl3/include", "src/Game", "libs/glad/glad/include", "libs/glm", "libs/entt", "libs/ttf" }
 
-    libdirs { "libs/sdl3/lib/x64" }
+    libdirs { "libs/sdl3/lib/x64", "libs/ttf/lib" }
 
-    links { "SDL3.dll","SDL3.lib" }
+    links { "SDL3.dll","SDL3.lib","freetype.lib","freetype.dll" }
 
    files { "src/Game/**.h", "src/Game/**.cpp", "src/Game/**.c" }
 

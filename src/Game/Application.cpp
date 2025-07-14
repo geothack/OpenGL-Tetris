@@ -113,5 +113,8 @@ void Application::Init()
 
 	RuntimeCache->Add(mBall);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);
 }

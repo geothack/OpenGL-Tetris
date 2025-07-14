@@ -14,10 +14,16 @@ public:
 	bool HasShot = false;
 
 private:
-	void SwitchDirection(const int xDir, const int yDir);
+	void MoveBall(const int xDir, const int yDir);
+
+	void SetBallStartShotDirection();
 
 private:
 	Entity* mPlayer;
 
+	bool mFirstShotSwap = false;
+
+	int mBallMovementX = 0;
+	int mBallMovementY = 0;
 };
 
