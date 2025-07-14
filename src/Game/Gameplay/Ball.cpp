@@ -2,6 +2,7 @@
 #include "Ball.h"
 #include "Utility/ResourceCache.h"
 #include "Utility/Helper.h"
+#include "Gameplay/GameController.h"
 
 Ball::Ball(Entity& player) : mPlayer(&player)
 {
@@ -40,6 +41,7 @@ void Ball::Update()
 
 		if (GetEntityPosition()->y >= 570)
 		{
+			GameController::GameLives--;
 			HasShot = false;
 			SetBallStartShotDirection();
 		}

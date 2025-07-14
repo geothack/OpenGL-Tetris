@@ -1,7 +1,5 @@
 #pragma once
 
-#include "WorldTypes/Entity.h"
-
 class OpenGLSpriteRenderer : public Renderer
 {
 public:

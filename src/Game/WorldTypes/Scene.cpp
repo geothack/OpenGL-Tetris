@@ -26,3 +26,11 @@ Entity Scene::CreateShaderSpriteEntity(Transform& transform, OpenGLSprite& sprit
 	entity.AddComponent<OpenGLShader>(shader);
 	return entity;
 }
+
+Entity Scene::CreateTextEntity(OpenGLText& text, OpenGLShader& shader)
+{
+	auto entity = Entity(mRegistry.create(), *this);
+	entity.AddComponent<OpenGLText>(text);
+	entity.AddComponent<OpenGLShader>(shader);
+	return entity;
+}

@@ -1,11 +1,12 @@
 #include "Utility\PreLibrary.h"
-#include "Text.h"
+#include "OpenGLText.h"
 
-ZText::ZText(const int height, const std::string& message) :mHeight(height), Message(message)
+OpenGLText::OpenGLText(const int height, std::string_view message, TextAttributes attribs, OpenGLShader& shader) :mHeight(height), Message(message.data()),
+    TextAttribs(attribs), mTextShader(&shader)
 {
 }
 
-bool ZText::LoadFont(const std::filesystem::path& path)
+bool OpenGLText::LoadFont(const std::filesystem::path& path)
 {
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
@@ -65,7 +66,7 @@ bool ZText::LoadFont(const std::filesystem::path& path)
                 glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                 static_cast<uint32_t>(face->glyph->advance.x)
             };
-            mCharacters.insert(std::pair<char, Character>(c, character));
+            Characters.insert(std::pair<char, Character>(c, character));
         }
         glBindTexture(GL_TEXTURE_2D, 0);
     }
@@ -96,49 +97,50 @@ bool ZText::LoadFont(const std::filesystem::path& path)
     return true;
 }
 
-void ZText::RenderFont(Window* window, TextAttributes attribs, Material* shader)
+void OpenGLText::RenderFont()
 {
-    auto copyX = attribs.X;
-    shader->Attach();
-    shader->SetVec3("textColor", glm::vec3(attribs.Color.x, attribs.Color.y, attribs.Color.z));
+    auto copyX = TextAttribs.X;
+    mTextShader->Attach();
+    mTextShader->SetVec3("textColor", glm::vec3(TextAttribs.Color.x, TextAttribs.Color.y, TextAttribs.Color.z));
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(mVAO);
 
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
-    shader->Attach();
-    shader->SetMat4("projection", projection);
+    mTextShader->Attach();
+    mTextShader->SetMat4("projection", projection);
     //glUniformMatrix4fv(glGetUniformLocation(shader->GetHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
     std::string::const_iterator c;
     for (c = Message.begin(); c != Message.end(); c++)
     {
-        Character ch = mCharacters[*c];
+        Character ch = Characters[*c];
 
         if (*c == '\n')
         {
-            attribs.Y -= ((ch.Size.y)) * 1.3 * attribs.Scale;
-            attribs.X = copyX;
+            TextAttribs.Y -= ((ch.Size.y)) * 1.3 * TextAttribs.Scale;
+            TextAttribs.X = copyX;
         }
         else if (*c == ' ')
         {
-            attribs.X += ((ch.Advance >> 6)) * attribs.Scale;
+            TextAttribs.X += ((ch.Advance >> 6)) * TextAttribs.Scale;
         }
         else
         {
 
-            float xpos = attribs.X + ch.Bearing.x * attribs.Scale;
-            float ypos = attribs.Y - (ch.Size.y - ch.Bearing.y) * attribs.Scale;
+            float xpos = TextAttribs.X + ch.Bearing.x * TextAttribs.Scale;
+            float ypos = TextAttribs.Y - (ch.Size.y - ch.Bearing.y) * TextAttribs.Scale;
 
-            mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(xpos, ypos, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(ch.Size.x * attribs.Scale, ch.Size.y * attribs.Scale, 0));
-            shader->SetMat4("transform", mTransform);
+            Transform = glm::translate(glm::mat4(1.0f), glm::vec3(xpos, ypos, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(ch.Size.x * TextAttribs.Scale, ch.Size.y * TextAttribs.Scale, 0));
+            mTextShader->SetMat4("transform", Transform);
 
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
             glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 
             glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, 1);
-            attribs.X += (ch.Advance >> 6) * attribs.Scale;
+            TextAttribs.X += (ch.Advance >> 6) * TextAttribs.Scale;
         }
     }
+    TextAttribs.X = copyX;
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);

@@ -4,6 +4,6 @@
 
 #define RuntimeCache EntityRuntimeCache::Get()
 
-#define Cache ResourceCache<OpenGLSprite,Material,Transform,OpenGLShader,OpenGLTexture>::Get()
+#define Cache ResourceCache<OpenGLSprite,Material,Transform,OpenGLShader,OpenGLTexture,OpenGLText>::Get()
 
 #define GHelper Helper::Get()

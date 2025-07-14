@@ -2,6 +2,7 @@
 
 #include "WorldTypes/Transform.h"
 #include "Render/OpenGLSprite.h"
+#include "Render/OpenGLText.h"
 #include "Render/Material.h"
 
 class Entity;
@@ -14,6 +15,7 @@ public:
 	Entity CreateEntity(Transform& transform);
 	Entity CreateSpriteEntity(Transform& transform, OpenGLSprite& sprite, Material& material);
 	Entity CreateShaderSpriteEntity(Transform& transform, OpenGLSprite& sprite, OpenGLShader& shader);
+	Entity CreateTextEntity(OpenGLText& text, OpenGLShader& shader);
 
 	
 	inline ::entt::registry* GetRegister() { return &mRegistry; }

@@ -3,13 +3,17 @@
 #include "Window/Window.h"
 #include "Render/Material.h"
 #include "Render/OpenGLSpriteRenderer.h"
+#include "Render/OpenGLTextRenderer.h"
 #include "Render/OpenGLSprite.h"
 #include "Render/OpenGLTexture.h"
+#include "Render/OpenGLText.h"
 #include "WorldTypes/Transform.h"
 
 #include "Gameplay/Player.h"
 #include "Gameplay/Block.h"
 #include "Gameplay/Ball.h"
+#include "Gameplay/LivesText.h"
+#include "Gameplay/GameController.h"
 
 class Application
 {
@@ -28,6 +32,8 @@ private:
 
 	::OpenGLSpriteRenderer mSpriteRenderer;
 
+	::OpenGLTextRenderer mTextRenderer;
+
 	// Scenes
 	::Scene mMainScene;
 
@@ -36,6 +42,12 @@ private:
 
 	// Ball
 	Ball mBall;
+
+	// Lives
+	LivesText mLivesText;
+
+	// GC
+	GameController mGameController;
 
 	// Blocks
 	std::array<Block, 30> mBlockArray;

@@ -22,7 +22,9 @@ void Application::Update()
 		mSpriteRenderer.Update();
 
 		RuntimeCache->Update();
-       
+
+		mTextRenderer.Update();
+
 		mGameWindow.Swap();
 	}
 
@@ -113,8 +115,25 @@ void Application::Init()
 
 	RuntimeCache->Add(mBall);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	Cache->Insert<OpenGLShader>("Lives", OpenGLShader("res/Shaders/Text.vert","res/Shaders/Text.frag"));
+
+	Cache->Insert<OpenGLText>("Lives", OpenGLText(35, "LIVES   " + std::to_string(GameController::GameLives), {.X = 10,.Y = 10,.Scale = 1.0f,.Color = glm::vec3(1.0)}, *Cache->Find<OpenGLShader>("Lives")));
+
+	Cache->Find<OpenGLText>("Lives")->LoadFont("res/Fonts/Frohburg.ttf");
+
+	static_cast<Entity&>(mLivesText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Lives"), *Cache->Find<OpenGLShader>("Lives"));
+
+	RuntimeCache->Add(mLivesText);
+
+	Cache->Insert<Transform>("GC",Transform());
+
+	mGameController = GameController(mLivesText);
+
+	static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
+
+	RuntimeCache->Add(mGameController);
+
+	mTextRenderer = ::OpenGLTextRenderer(mMainScene);
 
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);
 }
