@@ -14,6 +14,7 @@
 #include "Gameplay/Ball.h"
 #include "Gameplay/LivesText.h"
 #include "Gameplay/ScoreText.h"
+#include "Gameplay/LevelText.h"
 #include "Gameplay/GameController.h"
 
 class Application
@@ -47,6 +48,7 @@ private:
 	// Texts
 	LivesText mLivesText;
 	ScoreText mScoreText;
+	LevelText mLevelText;
 
 
 	// GC

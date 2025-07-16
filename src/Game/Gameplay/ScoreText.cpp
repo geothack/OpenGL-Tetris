@@ -12,5 +12,5 @@ void ScoreText::BeginPlay()
 
 void ScoreText::Update()
 {
-	GetComponent<OpenGLText>()->Message = "SCORE   " + std::to_string(GameController::GameScore);
+	GetComponent<OpenGLText>()->Message = "SCORE  " + std::to_string(GameController::GameScore);
 }

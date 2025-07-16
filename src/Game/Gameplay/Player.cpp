@@ -18,7 +18,7 @@ void Player::Update()
 		SetEntityPosition(glm::vec2(GetEntityPosition()->x - 1,GetEntityPosition()->y));
 	}
 
-	if (GInput->KeyPressed("D") && GetEntityPosition()->x < 720)
+	if (GInput->KeyPressed("D") && GetEntityPosition()->x < 800 - GetEntitySize()->x)
 	{
 		SetEntityPosition(glm::vec2(GetEntityPosition()->x + 1, GetEntityPosition()->y));
 	}

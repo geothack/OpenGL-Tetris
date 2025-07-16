@@ -27,6 +27,8 @@ private:
 	int mBallMovementX = 0;
 	int mBallMovementY = 0;
 
+	int mStepMovement = 0;
+
 	std::array<Block, 30> mGameBlocks;
 };
 

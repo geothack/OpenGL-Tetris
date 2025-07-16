@@ -23,11 +23,15 @@ void Ball::Update()
 {
 	if (!HasShot)
 	{
-		SetEntityPosition(glm::vec2(mPlayer->GetEntityPosition()->x + 25, 500));
+		SetEntityPosition(glm::vec2(mPlayer->GetEntityPosition()->x + mPlayer->GetEntitySize()->x / 2 - GetEntitySize()->x / 2, 500));
 	}
 	else
 	{
-		MoveBall(mBallMovementX,mBallMovementY);
+		mStepMovement++;
+		if (mStepMovement % 3 == 0)
+		{
+			MoveBall(mBallMovementX, mBallMovementY);
+		}
 		
 
 		if (GetEntityPosition()->x <= 0)
@@ -52,12 +56,25 @@ void Ball::Update()
 			SetBallStartShotDirection();
 		}
 
+		if (GetEntityPosition()->y == mPlayer->GetEntityPosition()->y - 20
+			&& GetEntityPosition()->x >= mPlayer->GetEntityPosition()->x 
+			&& GetEntityPosition()->x <= mPlayer->GetEntityPosition()->x + mPlayer->GetEntitySize()->x)
+		{
+			mBallMovementY = -1;
+		}
+
 		for (auto& block : mGameBlocks)
 		{
 			if (GetEntityTransform()->HasCollided(*block.GetEntityTransform()))
 			{
 				GameController::GameScore += 10;
 				block.SetEntityPosition(glm::vec2(-100));
+				mBallMovementY == 1 ? mBallMovementY = -1 : mBallMovementY = 1;
+				mBallMovementX = GHelper->GenerateRandomInt(-1, 1);
+				while (mBallMovementX == 0)
+				{
+					mBallMovementX = GHelper->GenerateRandomInt(-1, 1);
+				}
 			}
 		}
 	}

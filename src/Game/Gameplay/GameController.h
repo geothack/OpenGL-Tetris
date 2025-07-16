@@ -13,6 +13,7 @@ public:
 
 	inline static int GameLives = 3;
 	inline static int GameScore = 0;
+	inline static int GameLevel = 1;
 
 private:
 };

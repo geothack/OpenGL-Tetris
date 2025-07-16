@@ -106,6 +106,26 @@ public:
 		GetComponent<Transform>()->UpdateRotation(rotation);
 	}
 
+	glm::vec2* GetEntitySize()
+	{
+		if (!HasComponent<Transform>())
+		{
+			Verify::Update("Entity does not have transform component", 0);
+		}
+
+		return GetComponent<Transform>()->GetSize();
+	}
+
+	void SetEntitySize(const glm::vec2& size)
+	{
+		if (!HasComponent<Transform>())
+		{
+			Verify::Update("Entity does not have transform component", 0);
+		}
+
+		GetComponent<Transform>()->UpdateSize(size);
+	}
+
 	//inline const ::entt::entity GetHandle() { return mHandle; }
 
 	inline const int GetEntityCacheHandle() { return mEntityCacheHandle; }
