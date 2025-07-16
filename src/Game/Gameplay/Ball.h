@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Gameplay/Block.h"
 
 class Ball : public Entity
 {
 public:
 	Ball() = default;
 
-	Ball(Entity& player);
+	Ball(Entity& player, std::span<Block> blocks);
 
 	void BeginPlay() override;
 	void Update() override;
@@ -25,5 +26,7 @@ private:
 
 	int mBallMovementX = 0;
 	int mBallMovementY = 0;
+
+	std::array<Block, 30> mGameBlocks;
 };
 

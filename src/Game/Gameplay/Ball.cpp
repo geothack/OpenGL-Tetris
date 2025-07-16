@@ -3,9 +3,15 @@
 #include "Utility/ResourceCache.h"
 #include "Utility/Helper.h"
 #include "Gameplay/GameController.h"
+#include "Utility/Verify.h"
 
-Ball::Ball(Entity& player) : mPlayer(&player)
+Ball::Ball(Entity& player, std::span<Block> blocks) : mPlayer(&player)
 {
+	if (blocks.size() != 30)
+	{
+		Verify::Update("Span must have exactly 30 elements.",0);
+	}
+	std::copy(blocks.begin(), blocks.end(), mGameBlocks.begin());
 }
 
 void Ball::BeginPlay()
@@ -44,6 +50,15 @@ void Ball::Update()
 			GameController::GameLives--;
 			HasShot = false;
 			SetBallStartShotDirection();
+		}
+
+		for (auto& block : mGameBlocks)
+		{
+			if (GetEntityTransform()->HasCollided(*block.GetEntityTransform()))
+			{
+				GameController::GameScore += 10;
+				block.SetEntityPosition(glm::vec2(-100));
+			}
 		}
 	}
 }

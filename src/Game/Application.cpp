@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Utility/EntityRuntimeCache.h"
 #include "Utility/ResourceCache.h"
+#include "Utility/RendererCache.h"
 
 Application::Application() : mGameWindow(Window("Breakout",800,600))
 {
@@ -19,11 +20,9 @@ void Application::Update()
 	{
 		mGameWindow.Events();
 
-		mSpriteRenderer.Update();
+		GRenderer->Update();
 
 		RuntimeCache->Update();
-
-		mTextRenderer.Update();
 
 		mGameWindow.Swap();
 	}
@@ -32,6 +31,7 @@ void Application::Update()
 	{
 		sprite.second.Free();
 	}
+	GRenderer->Free();
 	RuntimeCache->Free();
 	Cache->Free();
 }
@@ -104,7 +104,7 @@ void Application::Init()
 		color++;
 	}
 
-	mBall = Ball(static_cast<Entity&>(mPlayer));
+	mBall = Ball(static_cast<Entity&>(mPlayer), mBlockArray);
 
 	Cache->Insert<Transform>("Ball", ::Transform(glm::vec2(385,500),glm::vec2(30)));
 	Cache->Insert<OpenGLTexture>("Ball", ::OpenGLTexture("res/Textures/circle.png"));
@@ -115,19 +115,32 @@ void Application::Init()
 
 	RuntimeCache->Add(mBall);
 
-	Cache->Insert<OpenGLShader>("Lives", OpenGLShader("res/Shaders/Text.vert","res/Shaders/Text.frag"));
+	// Text
 
-	Cache->Insert<OpenGLText>("Lives", OpenGLText(35, "LIVES   " + std::to_string(GameController::GameLives), {.X = 10,.Y = 10,.Scale = 1.0f,.Color = glm::vec3(1.0)}, *Cache->Find<OpenGLShader>("Lives")));
+	Cache->Insert<OpenGLShader>("Text", OpenGLShader("res/Shaders/Text.vert","res/Shaders/Text.frag"));
+
+	Cache->Insert<OpenGLText>("Lives", OpenGLText(35, "LIVES   " + std::to_string(GameController::GameLives), {.X = 10,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(1.0)}, *Cache->Find<OpenGLShader>("Text")));
 
 	Cache->Find<OpenGLText>("Lives")->LoadFont("res/Fonts/Frohburg.ttf");
 
-	static_cast<Entity&>(mLivesText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Lives"), *Cache->Find<OpenGLShader>("Lives"));
+	static_cast<Entity&>(mLivesText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Lives"), *Cache->Find<OpenGLShader>("Text"));
 
 	RuntimeCache->Add(mLivesText);
 
+
+	Cache->Insert<OpenGLText>("Score", OpenGLText(35, "Score   " + std::to_string(GameController::GameLives), { .X = 620,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(1.0) }, *Cache->Find<OpenGLShader>("Text")));
+
+	Cache->Find<OpenGLText>("Score")->LoadFont("res/Fonts/Frohburg.ttf");
+
+	static_cast<Entity&>(mScoreText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Score"), *Cache->Find<OpenGLShader>("Text"));
+
+	RuntimeCache->Add(mScoreText);
+
+
+
 	Cache->Insert<Transform>("GC",Transform());
 
-	mGameController = GameController(mLivesText);
+	mGameController = GameController();
 
 	static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
 
@@ -136,4 +149,7 @@ void Application::Init()
 	mTextRenderer = ::OpenGLTextRenderer(mMainScene);
 
 	mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);
+
+	GRenderer->Add(mSpriteRenderer, 0);
+	GRenderer->Add(mTextRenderer, 1);
 }

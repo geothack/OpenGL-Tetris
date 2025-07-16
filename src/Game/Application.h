@@ -13,6 +13,7 @@
 #include "Gameplay/Block.h"
 #include "Gameplay/Ball.h"
 #include "Gameplay/LivesText.h"
+#include "Gameplay/ScoreText.h"
 #include "Gameplay/GameController.h"
 
 class Application
@@ -43,8 +44,10 @@ private:
 	// Ball
 	Ball mBall;
 
-	// Lives
+	// Texts
 	LivesText mLivesText;
+	ScoreText mScoreText;
+
 
 	// GC
 	GameController mGameController;

@@ -7,3 +7,5 @@
 #define Cache ResourceCache<OpenGLSprite,Material,Transform,OpenGLShader,OpenGLTexture,OpenGLText>::Get()
 
 #define GHelper Helper::Get()
+
+#define GRenderer RendererCache::Get()
