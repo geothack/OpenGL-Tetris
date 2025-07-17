@@ -1,14 +1,15 @@
 #include "Utility\PreLibrary.h"
-#include "ZSound.h"
+#include "Sound.h"
+#include "Utility/Verify.h"
 
-ZSound::ZSound()
+Sound::Sound()
 {
 
 }
 
-ZSound::~ZSound()
+Sound::~Sound()
 {
-    Cleanup();
+    /*Cleanup();
     if (mContext)
     {
         alcMakeContextCurrent(nullptr);
@@ -17,10 +18,10 @@ ZSound::~ZSound()
     if (mDevice)
     {
         alcCloseDevice(mDevice);
-    }
+    }*/
 }
 
-void ZSound::Init()
+void Sound::Init()
 {
     // Initialize OpenAL
     mDevice = alcOpenDevice(nullptr);
@@ -36,7 +37,7 @@ void ZSound::Init()
     }
 }
 
-void ZSound::LoadSound(std::string_view name, const std::filesystem::path& filePath)
+void Sound::LoadSound(std::string_view name, const std::filesystem::path& filePath)
 {
     auto path = filePath.string();
 
@@ -44,7 +45,7 @@ void ZSound::LoadSound(std::string_view name, const std::filesystem::path& fileP
     SNDFILE* sndFile = sf_open(path.c_str(), SFM_READ, &sfInfo);
     if (!sndFile)
     {
-        throw std::runtime_error("Failed to load sound file: " + path);
+        Verify::Update("Failed to load sound file: " + path, 0);
     }
 
     ALenum format;
@@ -60,7 +61,7 @@ void ZSound::LoadSound(std::string_view name, const std::filesystem::path& fileP
     {
         std::println("Unsupported channel count| {}", sfInfo.channels);
         sf_close(sndFile);
-        throw std::runtime_error("Failed to indentify file format");
+        Verify::Update("Failed to indentify file format", 0);
     }
 
 
@@ -71,7 +72,7 @@ void ZSound::LoadSound(std::string_view name, const std::filesystem::path& fileP
 
     if (numFrames < 1)
     {
-        throw std::runtime_error("Failed to read audio data from file: " + path);
+        Verify::Update("Failed to read audio data from file| " + path, 0);
     }
 
     // Create OpenAL buffer and source
@@ -90,31 +91,31 @@ void ZSound::LoadSound(std::string_view name, const std::filesystem::path& fileP
     soundMap[name.data()] = {buffer, source};
 }
 
-void ZSound::ALPlaySound(std::string_view name)
+void Sound::ALPlaySound(std::string_view name)
 {
     auto it = soundMap.find(name.data());
     auto string = static_cast<std::string>(name);
     if (it == soundMap.end())
     {
-        throw std::runtime_error("Sound not found: " + string);
+        Verify::Update("Sound not found| " + string, 0);
     }
     alSourcePlay(it->second.Source);
     CheckOpenALError("Failed to play sound");
 }
 
-void ZSound::StopSound(std::string_view name)
+void Sound::StopSound(std::string_view name)
 {
     auto it = soundMap.find(name.data());
     auto string = static_cast<std::string>(name);
     if (it == soundMap.end())
     {
-        throw std::runtime_error("Sound not found: " + string);
+        Verify::Update("Sound not found: " + string, 0);
     }
     alSourceStop(it->second.Source);
     CheckOpenALError("Failed to stop sound");
 }
 
-void ZSound::Cleanup()
+void Sound::Free()
 {
     for (auto& pair : soundMap)
     {
@@ -124,14 +125,14 @@ void ZSound::Cleanup()
     soundMap.clear();
 }
 
-void ZSound::CheckOpenALError(std::string_view message)
+void Sound::CheckOpenALError(std::string_view message)
 {
     ALenum error = alGetError();
     auto string = static_cast<std::string>(message);
 
     if (error != AL_NO_ERROR)
     {
-        throw std::runtime_error(string + " (OpenAL error: " + std::to_string(error) + ")");
+        Verify::Update(string + " (OpenAL error: " + std::to_string(error) + ")", 0);
     }
 }
 

@@ -4,6 +4,7 @@
 #include "Utility/Helper.h"
 #include "Gameplay/GameController.h"
 #include "Utility/Verify.h"
+#include "Output/Output.h"
 
 Ball::Ball(Entity& player, std::span<Block> blocks) : mPlayer(&player)
 {
@@ -54,12 +55,13 @@ void Ball::Update()
 			GameController::GameLives--;
 			HasShot = false;
 			SetBallStartShotDirection();
+			GOutput->ALPlaySound("LostLife");
 		}
 
 		if (GetEntityPosition()->y >= mPlayer->GetEntityPosition()->y - 22
 			&& GetEntityPosition()->y <= mPlayer->GetEntityPosition()->y + 2
-			&& GetEntityPosition()->x >= mPlayer->GetEntityPosition()->x 
-			&& GetEntityPosition()->x <= mPlayer->GetEntityPosition()->x + mPlayer->GetEntitySize()->x)
+			&& GetEntityPosition()->x + 15 >= mPlayer->GetEntityPosition()->x 
+			&& GetEntityPosition()->x + 15 <= mPlayer->GetEntityPosition()->x + mPlayer->GetEntitySize()->x)
 		{
 			mBallMovementY = -1;
 		}
@@ -71,7 +73,7 @@ void Ball::Update()
 				GameController::GameScore += 10;
 				block.SetEntityPosition(glm::vec2(-100));
 				mBallMovementY == 1 ? mBallMovementY = -1 : mBallMovementY = 1;
-				
+				GOutput->ALPlaySound("Hit");
 			}
 		}
 	}

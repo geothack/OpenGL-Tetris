@@ -3,6 +3,7 @@
 #include "Utility/EntityRuntimeCache.h"
 #include "Utility/ResourceCache.h"
 #include "Utility/RendererCache.h"
+#include "Output/Output.h"
 
 Application::Application() : mGameWindow(Window("Breakout",800,600))
 {
@@ -38,6 +39,10 @@ void Application::Update()
 
 void Application::Init()
 {
+	GOutput->Init();
+	GOutput->LoadSound("Hit", "res/Sounds/Pickup.wav");
+	GOutput->LoadSound("LostLife", "res/Sounds/LostLife.wav");
+
 	mPlayer = Player(mBall);
 	Cache->Insert<Material>("Player", ::Material({ .Red = 0.25, .Green = 0.35, .Blue = 1.0 }));
 

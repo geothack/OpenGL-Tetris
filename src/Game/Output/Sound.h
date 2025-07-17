@@ -1,17 +1,17 @@
 #pragma once
 
 
-class ZSound
+class Sound
 {
 public:
-    ZSound();
-    ~ZSound();
+    Sound();
+    ~Sound();
 
     void Init();
     void LoadSound(std::string_view name, const std::filesystem::path& filePath);
     void ALPlaySound(std::string_view name);
     void StopSound(std::string_view name);
-    void Cleanup();
+    void Free();
 
 private:
     struct SoundData

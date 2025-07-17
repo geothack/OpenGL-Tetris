@@ -9,3 +9,5 @@
 #define GHelper Helper::Get()
 
 #define GRenderer RendererCache::Get()
+
+#define GOutput Output::Get()
