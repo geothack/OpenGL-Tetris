@@ -7,17 +7,17 @@ class Ball : public Entity
 public:
 	Ball() = default;
 
-	Ball(Entity& player, std::span<Block> blocks);
+	Ball(Entity& player, std::span<Block,30> blocks);
 
 	void BeginPlay() override;
 	void Update() override;
+
+	void SetBallStartShotDirection();
 
 	bool HasShot = false;
 
 private:
 	void MoveBall(const int xDir, const int yDir);
-
-	void SetBallStartShotDirection();
 
 private:
 	Entity* mPlayer;

@@ -7,7 +7,9 @@
 
 Application::Application() : mGameWindow(Window("Breakout",800,600))
 {
+	auto loadThread = std::thread(&Application::Load,this);
 	Init();
+	loadThread.join();
 	Update();
 }
 
@@ -32,6 +34,7 @@ void Application::Update()
 	{
 		sprite.second.Free();
 	}
+	GOutput->Free();
 	GRenderer->Free();
 	RuntimeCache->Free();
 	Cache->Free();
@@ -39,10 +42,6 @@ void Application::Update()
 
 void Application::Init()
 {
-	GOutput->Init();
-	GOutput->LoadSound("Hit", "res/Sounds/Pickup.wav");
-	GOutput->LoadSound("LostLife", "res/Sounds/LostLife.wav");
-
 	mPlayer = Player(mBall);
 	Cache->Insert<Material>("Player", ::Material({ .Red = 0.25, .Green = 0.35, .Blue = 1.0 }));
 
@@ -93,7 +92,8 @@ void Application::Init()
 			xPos = 10;
 			yPos += 50;
 		}
-		Cache->Insert<Transform>("Block" + std::to_string(i), ::Transform(glm::vec2(xPos, yPos), glm::vec2(60, 30)));
+																					//xPos,yPos
+		Cache->Insert<Transform>("Block" + std::to_string(i), ::Transform(glm::vec2(-500, -500), glm::vec2(60, 30)));
 		xPos += 80;
 	}
 
@@ -152,13 +152,7 @@ void Application::Init()
 
 
 
-	Cache->Insert<Transform>("GC",Transform());
-
-	mGameController = GameController();
-
-	static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
-
-	RuntimeCache->Add(mGameController);
+	
 
 	mTextRenderer = ::OpenGLTextRenderer(mMainScene);
 
@@ -166,4 +160,19 @@ void Application::Init()
 
 	GRenderer->Add(mSpriteRenderer, 0);
 	GRenderer->Add(mTextRenderer, 1);
+}
+
+void Application::Load()
+{
+	GOutput->Init();
+	GOutput->LoadSound("Hit", "res/Sounds/Pickup.wav");
+	GOutput->LoadSound("LostLife", "res/Sounds/LostLife.wav");
+
+	Cache->Insert<Transform>("GC", Transform());
+
+	mGameController = GameController(mBlockArray,mBall);
+
+	static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
+
+	RuntimeCache->Add(mGameController);
 }

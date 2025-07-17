@@ -27,7 +27,7 @@ public:
 
 private:
 	void Init();
-
+	void Load();
 
 private:
 	::Window mGameWindow;

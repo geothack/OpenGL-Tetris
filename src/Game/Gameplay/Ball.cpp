@@ -6,7 +6,7 @@
 #include "Utility/Verify.h"
 #include "Output/Output.h"
 
-Ball::Ball(Entity& player, std::span<Block> blocks) : mPlayer(&player)
+Ball::Ball(Entity& player, std::span<Block,30> blocks) : mPlayer(&player)
 {
 	if (blocks.size() != 30)
 	{
