@@ -37,6 +37,7 @@
 #include <stdexcept>
 #include <random>
 #include <thread>
+#include <Windows.h>
 
 // Classes
 

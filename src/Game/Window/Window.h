@@ -19,6 +19,7 @@ public:
 
 public:
 	inline const bool const GetWindowIsOpen() const { return mWindowIsOpen; }
+	bool SetWindowIsOpen(bool value) { return mWindowIsOpen = value; }
 
 private:
 	static void APIENTRY DebugLog(GLenum source,

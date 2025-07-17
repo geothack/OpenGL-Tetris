@@ -6,7 +6,7 @@ class Player : public Entity
 {
 public:
 	Player() = default;
-	Player(Ball& ball);
+	Player(Ball& ball, Window& window, std::span<Entity,3> texts);
 
 	void BeginPlay() override;
 	void Update() override;
@@ -15,5 +15,10 @@ public:
 
 private:
 	Ball* mBall;
+	Window* mWindow;
+
+	std::array<Entity, 3> mStartScreenTexts;
+
+	bool mQuitGame = false;
 };
 

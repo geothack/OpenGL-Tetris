@@ -17,6 +17,14 @@
 #include "Gameplay/LevelText.h"
 #include "Gameplay/GameController.h"
 
+enum class GameState
+{
+	None = -1,
+	GameStart,
+	GameLoop,
+	GameEnd
+};
+
 class Application
 {
 public:
@@ -24,6 +32,8 @@ public:
 	~Application();
 
 	void Update();
+
+	inline static GameState GameState = GameState::GameStart;
 
 private:
 	void Init();
@@ -49,6 +59,9 @@ private:
 	LivesText mLivesText;
 	ScoreText mScoreText;
 	LevelText mLevelText;
+
+	// StartScreenTexts
+	std::array<Entity, 3> mStartScreenTexts;
 
 
 	// GC
