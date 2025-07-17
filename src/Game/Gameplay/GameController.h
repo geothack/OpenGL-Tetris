@@ -3,12 +3,13 @@
 #include "Gameplay/LivesText.h"
 #include "Gameplay/Block.h"
 #include "Gameplay/Ball.h"
+#include "Gameplay/Player.h"
 
 class GameController : public Entity
 {
 public:
 	GameController() = default;
-	GameController(std::span<Block,30> blocks, Ball& ball);
+	GameController(std::span<Block,30> blocks, Ball& ball, Player& player);
 	~GameController() override;
 
 	void BeginPlay() override;
@@ -23,25 +24,11 @@ private:
 
 private:
 
-	enum class Level
-	{
-		NONE = -1,
-		Lv1,
-		Lv2,
-		Lv3,
-		Lv4,
-		Lv5,
-		Lv6,
-		Lv7,
-		Lv8,
-		Lv9,
-		Lv10,
-	};
-
-	Level mGameLevel = Level::Lv1;
-
 	std::array<Block, 30> mGameBlocks;
 
 	Ball* mBall;
+	Player* mPlayer;
+
+	int mPrevLevelScore = -1;
 };
 

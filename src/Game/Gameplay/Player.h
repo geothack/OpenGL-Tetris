@@ -11,6 +11,8 @@ public:
 	void BeginPlay() override;
 	void Update() override;
 
+	inline static int PlayerSpeed = 1;
+
 private:
 	Ball* mBall;
 };

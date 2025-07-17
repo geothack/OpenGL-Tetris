@@ -170,7 +170,7 @@ void Application::Load()
 
 	Cache->Insert<Transform>("GC", Transform());
 
-	mGameController = GameController(mBlockArray,mBall);
+	mGameController = GameController(mBlockArray,mBall,mPlayer);
 
 	static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
 

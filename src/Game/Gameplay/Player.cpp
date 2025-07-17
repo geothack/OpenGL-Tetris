@@ -15,12 +15,12 @@ void Player::Update()
 {
 	if (GInput->KeyPressed("A") && GetEntityPosition()->x > 0)
 	{
-		SetEntityPosition(glm::vec2(GetEntityPosition()->x - 1,GetEntityPosition()->y));
+		SetEntityPosition(glm::vec2(GetEntityPosition()->x - PlayerSpeed,GetEntityPosition()->y));
 	}
 
 	if (GInput->KeyPressed("D") && GetEntityPosition()->x < 800 - GetEntitySize()->x)
 	{
-		SetEntityPosition(glm::vec2(GetEntityPosition()->x + 1, GetEntityPosition()->y));
+		SetEntityPosition(glm::vec2(GetEntityPosition()->x + PlayerSpeed, GetEntityPosition()->y));
 	}
 
 	if (GInput->KeyPressedDown("Space") && !GInput->KeyPressedUp("Space") && !mBall->HasShot)

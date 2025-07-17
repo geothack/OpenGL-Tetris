@@ -16,6 +16,8 @@ public:
 
 	bool HasShot = false;
 
+	inline static int BallTimeStep = 3;
+
 private:
 	void MoveBall(const int xDir, const int yDir);
 

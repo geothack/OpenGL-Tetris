@@ -29,7 +29,7 @@ void Ball::Update()
 	else
 	{
 		mStepMovement++;
-		if (mStepMovement % 3 == 0)
+		if (mStepMovement % BallTimeStep == 0)
 		{
 			MoveBall(mBallMovementX, mBallMovementY);
 		}
