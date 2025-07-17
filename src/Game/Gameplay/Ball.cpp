@@ -56,7 +56,8 @@ void Ball::Update()
 			SetBallStartShotDirection();
 		}
 
-		if (GetEntityPosition()->y == mPlayer->GetEntityPosition()->y - 20
+		if (GetEntityPosition()->y >= mPlayer->GetEntityPosition()->y - 22
+			&& GetEntityPosition()->y <= mPlayer->GetEntityPosition()->y + 2
 			&& GetEntityPosition()->x >= mPlayer->GetEntityPosition()->x 
 			&& GetEntityPosition()->x <= mPlayer->GetEntityPosition()->x + mPlayer->GetEntitySize()->x)
 		{
@@ -70,11 +71,7 @@ void Ball::Update()
 				GameController::GameScore += 10;
 				block.SetEntityPosition(glm::vec2(-100));
 				mBallMovementY == 1 ? mBallMovementY = -1 : mBallMovementY = 1;
-				mBallMovementX = GHelper->GenerateRandomInt(-1, 1);
-				while (mBallMovementX == 0)
-				{
-					mBallMovementX = GHelper->GenerateRandomInt(-1, 1);
-				}
+				
 			}
 		}
 	}

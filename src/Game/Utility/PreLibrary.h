@@ -14,7 +14,12 @@
 
 #include "stb_image.h"
 
-#include "freetype/freetype.h"
+#include <freetype/freetype.h>
+
+#include <sndfile.h>
+
+#include <AL/al.h>
+#include <AL/alc.h>
 
 // Standard Libs
 
