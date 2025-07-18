@@ -3,6 +3,7 @@
 #include "Input/Input.h"
 #include "Application.h"
 
+
 Player::Player(Ball& ball, Window& window, TitleText& title, PlayText& play, QuitText& quit) : mBall(&ball), mWindow(&window)
 	, mTitle(&title), mPlay(&play), mQuit(&quit)
 {
@@ -43,11 +44,6 @@ void Player::Update()
 			{
 				mWindow->SetWindowIsOpen(false);
 			}
-
-			//mTitle->AddComponent<int>(0.5);
-			//mPlay->GetComponent<OpenGLText>()->TextAttribs.X = -500;
-			//mQuit->SetTextMessage("");
-			
 		}
 	}
 	if (Application::GameState == GameState::GameLoop)

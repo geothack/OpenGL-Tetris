@@ -140,7 +140,7 @@ void OpenGLText::RenderFont()
             TextAttribs.X += (ch.Advance >> 6) * TextAttribs.Scale;
         }
     }
-    TextAttribs.X = copyX;
+    //TextAttribs.X = copyX;
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
