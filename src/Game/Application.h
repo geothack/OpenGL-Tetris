@@ -58,6 +58,9 @@ private:
 	// Ball
 	Ball mBall;
 
+	// Sprite
+	Entity mBackScreen;
+
 	// Texts
 	LivesText mLivesText;
 	ScoreText mScoreText;

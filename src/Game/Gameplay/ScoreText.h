@@ -9,5 +9,7 @@ public:
 
 	void BeginPlay() override;
 	void Update() override;
+
+	void SetTextColor(const glm::vec3& color);
 };
 

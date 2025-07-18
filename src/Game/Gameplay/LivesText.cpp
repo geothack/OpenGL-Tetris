@@ -10,3 +10,8 @@ void LivesText::Update()
 {
 	GetComponent<OpenGLText>()->Message = "LIVES  " + std::to_string(GameController::GameLives);
 }
+
+void LivesText::SetTextColor(const glm::vec3& color)
+{
+	GetComponent<OpenGLText>()->TextAttribs.Color = color;
+}

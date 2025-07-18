@@ -24,6 +24,8 @@ public:
 
 	void SetMat4(std::string_view name, const glm::mat4& value) const;
 
+	void SetFloat(std::string_view name, float value) const;
+
 	void UpdateColor(Color color);
 
 private:

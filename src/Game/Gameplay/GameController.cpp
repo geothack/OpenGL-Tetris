@@ -17,7 +17,7 @@ GameController::~GameController()
 void GameController::BeginPlay()
 {
 
-	SetBlockPositions(10);
+	//SetBlockPositions(10);
 	
 }
 

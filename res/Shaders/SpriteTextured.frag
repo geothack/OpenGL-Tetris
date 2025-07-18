@@ -6,7 +6,9 @@ in vec2 TexCoords;
 
 layout (location = 0) uniform sampler2D image;
 
+uniform float Alpha;
+
 void main()
 {    
-    color = texture(image, TexCoords);
+    color = vec4(texture(image, TexCoords).rgb,1.0);
 }  

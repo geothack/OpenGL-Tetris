@@ -11,6 +11,8 @@ public:
 
 	void SetTextMessage(std::string_view message);
 
+	void SetTextColor(const glm::vec3& color);
+
 private:
 };
 

@@ -68,12 +68,14 @@ void Application::Init()
 		static_cast<Entity&>(mQuitText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Quit"), *Cache->Find<OpenGLShader>("Text"));
 		RuntimeCache->Add(mQuitText);
 
-		mPlayer = Player(mBall, mGameWindow,mTitleText,mPlayText,mQuitText);
+		mPlayer = Player(mBall, mGameWindow,mTitleText,mPlayText,mQuitText,mGameController,mLivesText,mLevelText,mScoreText);
 		Cache->Insert<Material>("Player", ::Material({ .Red = 0.25, .Green = 0.35, .Blue = 1.0 }));
 
 		Cache->Insert<OpenGLSprite>("Square", ::OpenGLSprite());
 
-		Cache->Insert<Transform>("Player", ::Transform(glm::vec2(340, 550), glm::vec2(120, 20)));
+
+																// 340
+		Cache->Insert<Transform>("Player", ::Transform(glm::vec2(-500, 550), glm::vec2(120, 20)));
 
 		static_cast<Entity&>(mPlayer) = mMainScene.CreateSpriteEntity(*Cache->Find<Transform>("Player"), *Cache->Find<OpenGLSprite>("Square"), *Cache->Find<Material>("Player"));
 
@@ -85,9 +87,7 @@ void Application::Init()
 		GRenderer->Add(mTextRenderer, 1);
 
 	}
-	if (GameState == GameState::GameLoop)
-	{
-		
+
 		auto color = 0;
 
 		for (auto i = 0; i < 6; i++)
@@ -144,6 +144,39 @@ void Application::Init()
 			color++;
 		}
 
+		
+
+		// Text
+
+		//Cache->Insert<OpenGLShader>("Text", OpenGLShader("res/Shaders/Text.vert", "res/Shaders/Text.frag"));
+
+		Cache->Insert<OpenGLText>("Lives", OpenGLText(35, "LIVES   " + std::to_string(GameController::GameLives), { .X = 70,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(0.0) }, *Cache->Find<OpenGLShader>("Text")));
+
+		Cache->Find<OpenGLText>("Lives")->LoadFont("res/Fonts/Frohburg.ttf");
+
+		static_cast<Entity&>(mLivesText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Lives"), *Cache->Find<OpenGLShader>("Text"));
+
+		RuntimeCache->Add(mLivesText);
+
+
+		Cache->Insert<OpenGLText>("Score", OpenGLText(35, "Score   " + std::to_string(GameController::GameLives), { .X = 620,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(0.0) }, *Cache->Find<OpenGLShader>("Text")));
+
+		Cache->Find<OpenGLText>("Score")->LoadFont("res/Fonts/Frohburg.ttf");
+
+		static_cast<Entity&>(mScoreText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Score"), *Cache->Find<OpenGLShader>("Text"));
+
+		RuntimeCache->Add(mScoreText);
+
+
+		Cache->Insert<OpenGLText>("Level", OpenGLText(35, "Level   " + std::to_string(GameController::GameLevel), { .X = 345,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(0.0) }, *Cache->Find<OpenGLShader>("Text")));
+
+		Cache->Find<OpenGLText>("Level")->LoadFont("res/Fonts/Frohburg.ttf");
+
+		static_cast<Entity&>(mLevelText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Level"), *Cache->Find<OpenGLShader>("Text"));
+
+		RuntimeCache->Add(mLevelText);
+
+
 		mBall = Ball(static_cast<Entity&>(mPlayer), mBlockArray);
 
 		Cache->Insert<Transform>("Ball", ::Transform(glm::vec2(385, 500), glm::vec2(30)));
@@ -155,41 +188,11 @@ void Application::Init()
 
 		RuntimeCache->Add(mBall);
 
-		// Text
-
-		//Cache->Insert<OpenGLShader>("Text", OpenGLShader("res/Shaders/Text.vert", "res/Shaders/Text.frag"));
-
-		Cache->Insert<OpenGLText>("Lives", OpenGLText(35, "LIVES   " + std::to_string(GameController::GameLives), { .X = 70,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(1.0) }, *Cache->Find<OpenGLShader>("Text")));
-
-		Cache->Find<OpenGLText>("Lives")->LoadFont("res/Fonts/Frohburg.ttf");
-
-		static_cast<Entity&>(mLivesText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Lives"), *Cache->Find<OpenGLShader>("Text"));
-
-		RuntimeCache->Add(mLivesText);
-
-
-		Cache->Insert<OpenGLText>("Score", OpenGLText(35, "Score   " + std::to_string(GameController::GameLives), { .X = 620,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(1.0) }, *Cache->Find<OpenGLShader>("Text")));
-
-		Cache->Find<OpenGLText>("Score")->LoadFont("res/Fonts/Frohburg.ttf");
-
-		static_cast<Entity&>(mScoreText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Score"), *Cache->Find<OpenGLShader>("Text"));
-
-		RuntimeCache->Add(mScoreText);
-
-
-		Cache->Insert<OpenGLText>("Level", OpenGLText(35, "Level   " + std::to_string(GameController::GameLevel), { .X = 345,.Y = 1,.Scale = 1.0f,.Color = glm::vec3(1.0) }, *Cache->Find<OpenGLShader>("Text")));
-
-		Cache->Find<OpenGLText>("Level")->LoadFont("res/Fonts/Frohburg.ttf");
-
-		static_cast<Entity&>(mLevelText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Level"), *Cache->Find<OpenGLShader>("Text"));
-
-		RuntimeCache->Add(mLevelText);
-
-
+		
 		mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);
 
 		GRenderer->Add(mSpriteRenderer, 0);
-	}
+	
 
 		
 	
@@ -199,8 +202,7 @@ void Application::Load()
 {
 	GOutput->Init();
 
-	if (GameState == GameState::GameLoop)
-	{
+
 		GOutput->LoadSound("Hit", "res/Sounds/Pickup.wav");
 		GOutput->LoadSound("LostLife", "res/Sounds/LostLife.wav");
 
@@ -211,5 +213,5 @@ void Application::Load()
 		static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
 
 		RuntimeCache->Add(mGameController);
-	}
+	
 }

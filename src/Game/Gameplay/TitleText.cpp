@@ -14,3 +14,8 @@ void TitleText::SetTextMessage(std::string_view message)
 {
 	GetComponent<OpenGLText>()->Message = message.data();
 }
+
+void TitleText::SetTextColor(const glm::vec3& color)
+{
+	GetComponent<OpenGLText>()->TextAttribs.Color = color;
+}
