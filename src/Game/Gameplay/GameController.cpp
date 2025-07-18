@@ -3,14 +3,25 @@
 #include "Utility/ResourceCache.h"
 #include "Render/OpenGLTexture.h"
 #include "Render/OpenGLShader.h"
+#include "Application.h"
+#include "Input/Input.h"
 
-GameController::GameController(std::span<Block, 30> blocks, Ball& ball, Player& player) : mBall(&ball), mPlayer(&player)
+GameController::GameController(std::span<Block, 30> blocks, Ball& ball, Player& player, LivesText& lives
+	, LevelText& level, ScoreText& score, std::span<Entity, 2> endScreenTexts, PlayText& play, QuitText& quit
+, Window& window) : mBall(&ball), mPlayer(&player), mLivesText(&lives), mLevelText(&level)
+	, mScoreText(&score), mPlayText(&play), mQuitText(&quit), mWindow(&window)
 {
 	if (blocks.size() != 30)
 	{
 		Verify::Update("Span must have exactly 30 elements.", 0);
 	}
 	std::copy(blocks.begin(), blocks.end(), mGameBlocks.begin());
+
+	if (endScreenTexts.size() != 2)
+	{
+		Verify::Update("Span must have exactly 2 elements.", 0);
+	}
+	std::copy(endScreenTexts.begin(), endScreenTexts.end(), mEndScreenTexts.begin());
 }
 
 GameController::~GameController()
@@ -106,6 +117,57 @@ void GameController::Update()
 		mBall->HasShot = false;
 		mBall->SetBallStartShotDirection();
 		mPrevLevelScore = GameScore;
+	}
+
+	if (Application::GameState == GameState::GameEnd)
+	{
+		if (GInput->KeyPressed("W"))
+		{
+			mPlayText->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
+			mQuitText->SetTextColor(glm::vec3(1.0));
+			mQuitGame = false;
+		}
+
+		if (GInput->KeyPressed("S"))
+		{
+			mPlayText->SetTextColor(glm::vec3(1.0));
+			mQuitText->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
+			mQuitGame = true;
+		}
+
+		if (GInput->KeyPressed("Return"))
+		{
+			Application::GameState = GameState::GameLoop;
+			if (mQuitGame)
+			{
+				mWindow->SetWindowIsOpen(false);
+			}
+		}
+	}
+
+
+	if (GameLives <= -1)
+	{
+		Application::GameState = GameState::GameEnd;
+		for (auto i = 0; i < 30; i++)
+		{
+			mGameBlocks[i].SetEntityPosition(glm::vec2(-500, -500));
+		}
+		mPlayer->SetEntityPosition(glm::vec2(-500, 550));
+		mLivesText->SetTextColor(glm::vec3(0.0));
+		mLevelText->SetTextColor(glm::vec3(0.0));
+		mScoreText->SetTextColor(glm::vec3(0.0));
+
+		mEndScreenTexts[0].GetComponent<OpenGLText>()->TextAttribs.Color = glm::vec3(0.75, 0.0, 0.75);
+		mEndScreenTexts[0].GetComponent<OpenGLText>()->TextAttribs.X = 160;
+		mEndScreenTexts[1].GetComponent<OpenGLText>()->TextAttribs.X = 160;
+		mEndScreenTexts[1].GetComponent<OpenGLText>()->Message = "Levels | " + std::to_string(GameLevel) + "                  Score | "
+			+ std::to_string(GameScore);
+
+		mPlayText->SetTextColor(glm::vec3(0.75,0.0,0.75));
+		mPlayText->GetComponent<OpenGLText>()->TextAttribs.X = 350;
+		mQuitText->SetTextColor(glm::vec3(1.0));
+		mQuitText->GetComponent<OpenGLText>()->TextAttribs.X = 350;
 	}
 }
 

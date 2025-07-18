@@ -175,6 +175,20 @@ void Application::Init()
 		static_cast<Entity&>(mLevelText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Level"), *Cache->Find<OpenGLShader>("Text"));
 
 		RuntimeCache->Add(mLevelText);
+																			//160
+		Cache->Insert<OpenGLText>("GameOver", OpenGLText(75, "GameOver", { .X = -1000,.Y = 425,.Scale = 1.45f,.Color = glm::vec3(0.0) }, * Cache->Find<OpenGLShader>("Text")));
+
+		Cache->Find<OpenGLText>("GameOver")->LoadFont("res/Fonts/Frohburg.ttf");
+
+		mEndScreenTexts[0] = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("GameOver"), *Cache->Find<OpenGLShader>("Text"));
+
+		Cache->Insert<OpenGLText>("LvAndSco", OpenGLText(35, "Levels | " + std::to_string(GameController::GameLevel) + "                  Score | " 
+			+ std::to_string(GameController::GameScore)
+			, {.X = -1000,.Y = 350,.Scale = 1.3f,.Color = glm::vec3(1.0)}, * Cache->Find<OpenGLShader>("Text")));
+
+		Cache->Find<OpenGLText>("LvAndSco")->LoadFont("res/Fonts/Frohburg.ttf");
+
+		mEndScreenTexts[1] = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("LvAndSco"), *Cache->Find<OpenGLShader>("Text"));
 
 
 		mBall = Ball(static_cast<Entity&>(mPlayer), mBlockArray, mGameController);
@@ -210,7 +224,7 @@ void Application::Load()
 
 		Cache->Insert<Transform>("GC", Transform());
 
-		mGameController = GameController(mBlockArray, mBall, mPlayer);
+		mGameController = GameController(mBlockArray, mBall, mPlayer,mLivesText,mLevelText,mScoreText,mEndScreenTexts,mPlayText,mQuitText,mGameWindow);
 
 		static_cast<Entity&>(mGameController) = mMainScene.CreateEntity(*Cache->Find<Transform>("GC"));
 

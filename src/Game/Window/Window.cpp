@@ -7,25 +7,25 @@ Window::Window(std::string_view title, const int width, const int height)
 {
 	auto success = SDL_Init(SDL_INIT_VIDEO);
 
-	Verify::Update("Failed to initialize sdl3. ", success);
+	//Verify::Update("Failed to initialize sdl3. ", success);
 
 	// Set to use Render Doc!!!
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	mPlatformWindow = ::SDL_CreateWindow(title.data(), width, height, SDL_WINDOW_OPENGL);
 
-	Verify::Update("Failed to create sdl3 window. ", mPlatformWindow);
+	//Verify::Update("Failed to create sdl3 window. ", mPlatformWindow);
 
 	mOpenGLContext = ::SDL_GL_CreateContext(mPlatformWindow);
 
 	auto glSuccess = ::gladLoadGLLoader((GLADloadproc)::SDL_GL_GetProcAddress);
 
-	Verify::Update("Failed to load opengl functions with sdl3. ", glSuccess);
+	//Verify::Update("Failed to load opengl functions with sdl3. ", glSuccess);
 
-	std::println("OpenGL Loaded with Version {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+	//std::println("OpenGL Loaded with Version {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 
-	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	glDebugMessageCallback(DebugLog, nullptr);
+	//glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	//glDebugMessageCallback(DebugLog, nullptr);
 
 	mWindowIsOpen = true;
 }

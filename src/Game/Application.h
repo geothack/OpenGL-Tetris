@@ -69,6 +69,8 @@ private:
 	PlayText mPlayText;
 	QuitText mQuitText;
 
+	std::array<Entity, 2> mEndScreenTexts;
+
 
 	// GC
 	GameController mGameController;
