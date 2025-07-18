@@ -3,13 +3,10 @@
 #include "Input/Input.h"
 #include "Application.h"
 
-Player::Player(Ball& ball, Window& window, std::span<Entity,3> texts) : mBall(&ball), mWindow(&window)
+Player::Player(Ball& ball, Window& window, TitleText& title, PlayText& play, QuitText& quit) : mBall(&ball), mWindow(&window)
+	, mTitle(&title), mPlay(&play), mQuit(&quit)
 {
-	if (texts.size() != 3)
-	{
-		Verify::Update("Span must have exactly 3 elements.", 0);
-	}
-	std::copy(texts.begin(), texts.end(), mStartScreenTexts.begin());
+
 }
 
 void Player::BeginPlay()
@@ -28,15 +25,15 @@ void Player::Update()
 
 		if (GInput->KeyPressed("W"))
 		{
-			mStartScreenTexts[1].GetComponent<OpenGLText>()->TextAttribs.Color = glm::vec3(0.75, 0.0, 0.75);
-			mStartScreenTexts[2].GetComponent<OpenGLText>()->TextAttribs.Color = glm::vec3(1.0);
+			mPlay->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
+			mQuit->SetTextColor(glm::vec3(1.0));
 			mQuitGame = false;
 		}
 
 		if (GInput->KeyPressed("S"))
 		{
-			mStartScreenTexts[1].GetComponent<OpenGLText>()->TextAttribs.Color = glm::vec3(1.0);
-			mStartScreenTexts[2].GetComponent<OpenGLText>()->TextAttribs.Color = glm::vec3(0.75, 0.0, 0.75);
+			mPlay->SetTextColor(glm::vec3(1.0));
+			mQuit->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
 			mQuitGame = true;
 		}
 		if (GInput->KeyPressed("Return"))
@@ -47,10 +44,10 @@ void Player::Update()
 				mWindow->SetWindowIsOpen(false);
 			}
 
-			for (auto i = 0; i < 3; i++)
-			{
-				//mStartScreenTexts[i].GetComponent<OpenGLText>()->Message.X = -500;
-			}
+			//mTitle->AddComponent<int>(0.5);
+			//mPlay->GetComponent<OpenGLText>()->TextAttribs.X = -500;
+			//mQuit->SetTextMessage("");
+			
 		}
 	}
 	if (Application::GameState == GameState::GameLoop)

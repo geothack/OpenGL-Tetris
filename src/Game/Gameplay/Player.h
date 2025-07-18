@@ -1,12 +1,15 @@
 #pragma once
 
 #include "Gameplay/Ball.h"
+#include "Gameplay/TitleText.h"
+#include "Gameplay/PlayText.h"
+#include "Gameplay/QuitText.h"
 
 class Player : public Entity
 {
 public:
 	Player() = default;
-	Player(Ball& ball, Window& window, std::span<Entity,3> texts);
+	Player(Ball& ball, Window& window, TitleText& title, PlayText& play, QuitText& quit);
 
 	void BeginPlay() override;
 	void Update() override;
@@ -17,7 +20,9 @@ private:
 	Ball* mBall;
 	Window* mWindow;
 
-	std::array<Entity, 3> mStartScreenTexts;
+	TitleText* mTitle;
+	PlayText* mPlay;
+	QuitText* mQuit;
 
 	bool mQuitGame = false;
 };

@@ -26,7 +26,7 @@ project "OpenGLBreakout"
 
     libdirs { "libs/sdl3/lib/x64", "libs/ttf/lib", "libs/openal/libs", "libs/snd/libs" }
 
-    links { "SDL3.dll","SDL3.lib","freetype.lib","freetype.dll","OpenAL32.lib","OpenAL32.dll", "sndfile.lib" }
+    links { "SDL3.dll","SDL3.lib","freetype.lib","freetype.dll","OpenAL32.lib","OpenAL32.dll" }
 
    files { "src/Game/**.h", "src/Game/**.cpp", "src/Game/**.c" }
 
@@ -37,6 +37,9 @@ project "OpenGLBreakout"
       defines { "DEBUG" }
       symbols "On"
       buildoptions { "/MP" }
+      kind "ConsoleApp"
+
+      links { "dsndfile.lib" }
 
       postbuildcommands { "{COPY} libs/sdl3/lib/x64/SDL3.dll bin/Debug" }
       postbuildcommands { "{COPY} libs/openal/libs/OpenAL32.dll bin/Debug" }
@@ -45,6 +48,9 @@ project "OpenGLBreakout"
       defines { "NDEBUG" }
       optimize "On"
       buildoptions { "/MP" }
+      kind "WindowedApp"
+
+      links { "rsndfile.lib" }
 
     filter "files:**.c"
       flags { "NoPCH" }

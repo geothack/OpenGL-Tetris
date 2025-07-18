@@ -56,6 +56,17 @@ public:
 		mScene->GetRegister()->erase<T>(mHandle);
 	}
 
+	template<typename T, typename ... Args>
+	void UpdateComponent(Args&& ... args)
+	{
+		if (!HasComponent<T>())
+		{
+			Verify::Update("Entity does not have component", 0);
+		}
+
+		mScene->GetRegister()->replace<T>(mHandle, std::forward<Args>(args)...);
+	}
+
 	Transform* GetEntityTransform() 
 	{ 
 		if (!HasComponent<Transform>())

@@ -50,24 +50,25 @@ void Application::Init()
 
 		Cache->Find<OpenGLText>("Breakout")->LoadFont("res/Fonts/Frohburg.ttf");
 
-		mStartScreenTexts[0] = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Breakout"), *Cache->Find<OpenGLShader>("Text"));
+		static_cast<Entity&>(mTitleText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Breakout"), *Cache->Find<OpenGLShader>("Text"));
+		RuntimeCache->Add(mTitleText);
 
 
 		Cache->Insert<OpenGLText>("Play", OpenGLText(35, "Play", { .X = 350,.Y = 275,.Scale = 1.3f,.Color = glm::vec3(0.75,0.0,0.75) }, *Cache->Find<OpenGLShader>("Text")));
 
 		Cache->Find<OpenGLText>("Play")->LoadFont("res/Fonts/Frohburg.ttf");
 
-		mStartScreenTexts[1] = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Play"), *Cache->Find<OpenGLShader>("Text"));
-
+		static_cast<Entity&>(mPlayText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Play"), *Cache->Find<OpenGLShader>("Text"));
+		RuntimeCache->Add(mPlayText);
 
 		Cache->Insert<OpenGLText>("Quit", OpenGLText(35, "Quit", { .X = 350,.Y = 175,.Scale = 1.3f,.Color = glm::vec3(1.0) }, *Cache->Find<OpenGLShader>("Text")));
 
 		Cache->Find<OpenGLText>("Quit")->LoadFont("res/Fonts/Frohburg.ttf");
 
-		mStartScreenTexts[2] = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Quit"), *Cache->Find<OpenGLShader>("Text"));
+		static_cast<Entity&>(mQuitText) = mMainScene.CreateTextEntity(*Cache->Find<OpenGLText>("Quit"), *Cache->Find<OpenGLShader>("Text"));
+		RuntimeCache->Add(mQuitText);
 
-
-		mPlayer = Player(mBall, mGameWindow, mStartScreenTexts);
+		mPlayer = Player(mBall, mGameWindow,mTitleText,mPlayText,mQuitText);
 		Cache->Insert<Material>("Player", ::Material({ .Red = 0.25, .Green = 0.35, .Blue = 1.0 }));
 
 		Cache->Insert<OpenGLSprite>("Square", ::OpenGLSprite());

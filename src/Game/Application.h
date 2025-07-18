@@ -15,6 +15,9 @@
 #include "Gameplay/LivesText.h"
 #include "Gameplay/ScoreText.h"
 #include "Gameplay/LevelText.h"
+#include "Gameplay/TitleText.h"
+#include "Gameplay/PlayText.h"
+#include "Gameplay/QuitText.h"
 #include "Gameplay/GameController.h"
 
 enum class GameState
@@ -59,9 +62,9 @@ private:
 	LivesText mLivesText;
 	ScoreText mScoreText;
 	LevelText mLevelText;
-
-	// StartScreenTexts
-	std::array<Entity, 3> mStartScreenTexts;
+	TitleText mTitleText;
+	PlayText mPlayText;
+	QuitText mQuitText;
 
 
 	// GC
