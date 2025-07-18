@@ -1,5 +1,8 @@
 #include "Utility/PreLibrary.h"
 #include "GameController.h"
+#include "Utility/ResourceCache.h"
+#include "Render/OpenGLTexture.h"
+#include "Render/OpenGLShader.h"
 
 GameController::GameController(std::span<Block, 30> blocks, Ball& ball, Player& player) : mBall(&ball), mPlayer(&player)
 {
@@ -23,6 +26,24 @@ void GameController::BeginPlay()
 
 void GameController::Update()
 {
+	if (Shake)
+	{
+		ShakeScreen();
+
+		if (mCounter % 30 == 0)
+		{
+			mTimer += 0.025f;
+		}
+
+		if (mTimer >= 2)
+		{
+			mCounter = 0;
+			mTimer = 0.0f;
+			Shake = false;
+		}
+	}
+
+
 	// Lv2
 	if (GameScore == 100)
 	{
@@ -102,4 +123,11 @@ void GameController::SetBlockPositions(const int amount)
 		mGameBlocks[i].GetComponent<Transform>()->UpdatePosition(glm::vec2(xPos, yPos));
 		xPos += 80;
 	}
+}
+
+void GameController::ShakeScreen()
+{
+	mCounter += 2;
+	Cache->Find<OpenGLShader>("ShakeScreen")->Attach();
+	Cache->Find<OpenGLShader>("ShakeScreen")->SetFloat("time", mTimer);
 }

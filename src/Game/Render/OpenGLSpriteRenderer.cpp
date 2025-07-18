@@ -5,9 +5,10 @@
 #include "Render/OpenGLSprite.h"
 #include "Render/OpenGLTexture.h"
 
-OpenGLSpriteRenderer::OpenGLSpriteRenderer(Scene& scene) : mScene(&scene)
+OpenGLSpriteRenderer::OpenGLSpriteRenderer(Scene& scene, OpenGLShader& shakeScreen) : mScene(&scene), mShakeScreen(&shakeScreen)
 {
 	::glClearColor(0.0, 0.0, 0.0, 1.0);
+    mFrameBuffer = OpenGLFrameBuffer(*mShakeScreen);
 }
 
 OpenGLSpriteRenderer::~OpenGLSpriteRenderer()
@@ -16,7 +17,10 @@ OpenGLSpriteRenderer::~OpenGLSpriteRenderer()
 
 void OpenGLSpriteRenderer::Update()
 {
-	::glClear(GL_COLOR_BUFFER_BIT);
+    glBindFramebuffer(GL_FRAMEBUFFER, mFrameBuffer.GetHandle());
+    //glEnable(GL_DEPTH_TEST);
+
+    ::glClear(GL_COLOR_BUFFER_BIT);
 
     auto view = mScene->GetRegister()->view<Transform, OpenGLSprite, Material>();
 
@@ -47,4 +51,14 @@ void OpenGLSpriteRenderer::Update()
         glBindVertexArray(0);
     }
 
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    //glDisable(GL_DEPTH_TEST);
+    //glClearColor(0.25f, 0.25f, 0.25f, 1.0f); 
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    mShakeScreen->Attach();
+    glBindVertexArray(mFrameBuffer.GetVAO());
+    //glBindTexture(GL_TEXTURE_2D, mFrameBuffer.GetColourTex());	
+    glBindTextureUnit(0, mFrameBuffer.GetColourTex());
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 }

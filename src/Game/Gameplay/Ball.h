@@ -2,12 +2,14 @@
 
 #include "Gameplay/Block.h"
 
+class GameController;
+
 class Ball : public Entity
 {
 public:
 	Ball() = default;
 
-	Ball(Entity& player, std::span<Block,30> blocks);
+	Ball(Entity& player, std::span<Block,30> blocks, GameController& controller);
 
 	void BeginPlay() override;
 	void Update() override;
@@ -23,6 +25,8 @@ private:
 
 private:
 	Entity* mPlayer;
+
+	GameController* mController;
 
 	bool mFirstShotSwap = false;
 

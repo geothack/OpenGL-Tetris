@@ -177,7 +177,7 @@ void Application::Init()
 		RuntimeCache->Add(mLevelText);
 
 
-		mBall = Ball(static_cast<Entity&>(mPlayer), mBlockArray);
+		mBall = Ball(static_cast<Entity&>(mPlayer), mBlockArray, mGameController);
 
 		Cache->Insert<Transform>("Ball", ::Transform(glm::vec2(385, 500), glm::vec2(30)));
 		Cache->Insert<OpenGLTexture>("Ball", ::OpenGLTexture("res/Textures/circle.png"));
@@ -189,7 +189,9 @@ void Application::Init()
 		RuntimeCache->Add(mBall);
 
 		
-		mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene);
+		Cache->Insert<OpenGLShader>("ShakeScreen", OpenGLShader("res/Shaders/ShakeScreen.vert","res/Shaders/ShakeScreen.frag"));
+
+		mSpriteRenderer = ::OpenGLSpriteRenderer(mMainScene,*Cache->Find<OpenGLShader>("ShakeScreen"));
 
 		GRenderer->Add(mSpriteRenderer, 0);
 	

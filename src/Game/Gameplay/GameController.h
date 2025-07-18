@@ -21,6 +21,10 @@ public:
 
 	void SetBlockPositions(const int amount);
 
+	void ShakeScreen();
+
+	bool Shake = false;
+
 private:
 
 	std::array<Block, 30> mGameBlocks;
@@ -29,5 +33,9 @@ private:
 	Player* mPlayer;
 
 	int mPrevLevelScore = -1;
+
+	int mCounter = 0;
+
+	float mTimer = 0.0f;
 };
 

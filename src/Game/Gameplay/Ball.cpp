@@ -6,7 +6,7 @@
 #include "Utility/Verify.h"
 #include "Output/Output.h"
 
-Ball::Ball(Entity& player, std::span<Block,30> blocks) : mPlayer(&player)
+Ball::Ball(Entity& player, std::span<Block, 30> blocks, GameController& controller) : mPlayer(&player), mController(&controller)
 {
 	if (blocks.size() != 30)
 	{
@@ -56,6 +56,7 @@ void Ball::Update()
 			HasShot = false;
 			SetBallStartShotDirection();
 			GOutput->ALPlaySound("LostLife");
+			mController->Shake = true;
 		}
 
 		if (GetEntityPosition()->y >= mPlayer->GetEntityPosition()->y - 22
