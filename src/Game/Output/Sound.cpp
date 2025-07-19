@@ -9,7 +9,7 @@ Sound::Sound()
 
 Sound::~Sound()
 {
-    /*Cleanup();
+    Free();
     if (mContext)
     {
         alcMakeContextCurrent(nullptr);
@@ -18,7 +18,7 @@ Sound::~Sound()
     if (mDevice)
     {
         alcCloseDevice(mDevice);
-    }*/
+    }
 }
 
 void Sound::Init()

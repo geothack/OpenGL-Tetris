@@ -3,6 +3,7 @@
 #include "Input/Input.h"
 #include "Application.h"
 #include "Gameplay/GameController.h"
+#include "Output/Output.h"
 
 
 Player::Player(Ball& ball, Window& window, TitleText& title, PlayText& play, QuitText& quit, GameController& controller
@@ -30,6 +31,7 @@ void Player::Update()
 		{
 			mPlay->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
 			mQuit->SetTextColor(glm::vec3(1.0));
+			GOutput->ALPlaySound("Menu");
 			mQuitGame = false;
 		}
 
@@ -37,6 +39,7 @@ void Player::Update()
 		{
 			mPlay->SetTextColor(glm::vec3(1.0));
 			mQuit->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
+			GOutput->ALPlaySound("Menu");
 			mQuitGame = true;
 		}
 		if (GInput->KeyPressed("Return"))
@@ -46,18 +49,21 @@ void Player::Update()
 			{
 				mWindow->SetWindowIsOpen(false);
 			}
-
-			mTitle->SetTextColor(glm::vec3(0.0));
-			mTitle->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
-			mPlay->SetTextColor(glm::vec3(0.0));
-			mPlay->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
-			mQuit->SetTextColor(glm::vec3(0.0));
-			mQuit->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
-			SetEntityPosition(glm::vec2(340,550));
-			mController->SetBlockPositions(10);
-			mLivesText->SetTextColor(glm::vec3(1.0));
-			mLevelText->SetTextColor(glm::vec3(1.0));
-			mScoreText->SetTextColor(glm::vec3(1.0));
+			else
+			{
+				GOutput->ALPlaySound("Menu");
+				mTitle->SetTextColor(glm::vec3(0.0));
+				mTitle->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
+				mPlay->SetTextColor(glm::vec3(0.0));
+				mPlay->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
+				mQuit->SetTextColor(glm::vec3(0.0));
+				mQuit->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
+				SetEntityPosition(glm::vec2(340, 550));
+				mController->SetBlockPositions(10);
+				mLivesText->SetTextColor(glm::vec3(1.0));
+				mLevelText->SetTextColor(glm::vec3(1.0));
+				mScoreText->SetTextColor(glm::vec3(1.0));
+			}
 
 			//mBall->GetComponent<OpenGLShader>()->SetFloat("Alpha", 1.0);
 		}
@@ -77,6 +83,52 @@ void Player::Update()
 		if (GInput->KeyPressedDown("Space") && !GInput->KeyPressedUp("Space") && !mBall->HasShot)
 		{
 			mBall->HasShot = true;
+		}
+	}
+
+	if (Application::GameState == GameState::GameEnd)
+	{
+		if (GInput->KeyPressed("W"))
+		{
+			mPlay->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
+			mQuit->SetTextColor(glm::vec3(1.0));
+			GOutput->ALPlaySound("Menu");
+			mQuitGame = false;
+		}
+
+		if (GInput->KeyPressed("S"))
+		{
+			mPlay->SetTextColor(glm::vec3(1.0));
+			mQuit->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
+			GOutput->ALPlaySound("Menu");
+			mQuitGame = true;
+		}
+
+		if (GInput->KeyPressed("Return"))
+		{
+			Application::GameState = GameState::GameLoop;
+			if (mQuitGame)
+			{
+				mWindow->SetWindowIsOpen(false);
+			}
+			else
+			{
+				GOutput->ALPlaySound("Menu");
+				mTitle->SetTextColor(glm::vec3(0.0));
+				mTitle->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
+				mPlay->SetTextColor(glm::vec3(0.0));
+				mPlay->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
+				mQuit->SetTextColor(glm::vec3(0.0));
+				mQuit->GetComponent<OpenGLText>()->TextAttribs.X = -2000;
+				SetEntityPosition(glm::vec2(340, 550));
+				mController->SetBlockPositions(10);
+				mLivesText->SetTextColor(glm::vec3(1.0));
+				mLevelText->SetTextColor(glm::vec3(1.0));
+				mScoreText->SetTextColor(glm::vec3(1.0));
+				mController->ResetEndScreenText();
+				GameController::GameLevel = 1;
+				GameController::GameScore = 0;
+			}
 		}
 	}
 

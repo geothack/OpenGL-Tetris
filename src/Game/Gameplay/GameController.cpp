@@ -101,6 +101,7 @@ void GameController::Update()
 		mBall->SetBallStartShotDirection();
 		mPlayer->SetEntitySize(glm::vec2(80, 20));
 		Player::PlayerSpeed = 2;
+		//Ball::BallTimeStep--;
 		mPrevLevelScore = GameScore;
 	}
 	// Lv6 -- Infinite Loop Mechanic 
@@ -119,33 +120,7 @@ void GameController::Update()
 		mPrevLevelScore = GameScore;
 	}
 
-	if (Application::GameState == GameState::GameEnd)
-	{
-		if (GInput->KeyPressed("W"))
-		{
-			mPlayText->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
-			mQuitText->SetTextColor(glm::vec3(1.0));
-			mQuitGame = false;
-		}
-
-		if (GInput->KeyPressed("S"))
-		{
-			mPlayText->SetTextColor(glm::vec3(1.0));
-			mQuitText->SetTextColor(glm::vec3(0.75, 0.0, 0.75));
-			mQuitGame = true;
-		}
-
-		if (GInput->KeyPressed("Return"))
-		{
-			Application::GameState = GameState::GameLoop;
-			if (mQuitGame)
-			{
-				mWindow->SetWindowIsOpen(false);
-			}
-		}
-	}
-
-
+	
 	if (GameLives <= -1)
 	{
 		Application::GameState = GameState::GameEnd;
@@ -168,6 +143,7 @@ void GameController::Update()
 		mPlayText->GetComponent<OpenGLText>()->TextAttribs.X = 350;
 		mQuitText->SetTextColor(glm::vec3(1.0));
 		mQuitText->GetComponent<OpenGLText>()->TextAttribs.X = 350;
+		GameLives = 3;
 	}
 }
 
@@ -192,4 +168,10 @@ void GameController::ShakeScreen()
 	mCounter += 2;
 	Cache->Find<OpenGLShader>("ShakeScreen")->Attach();
 	Cache->Find<OpenGLShader>("ShakeScreen")->SetFloat("time", mTimer);
+}
+
+void GameController::ResetEndScreenText()
+{
+	mEndScreenTexts[0].GetComponent<OpenGLText>()->TextAttribs.X = -1000;
+	mEndScreenTexts[1].GetComponent<OpenGLText>()->TextAttribs.X = -1000;
 }

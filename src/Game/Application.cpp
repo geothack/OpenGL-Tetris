@@ -7,9 +7,10 @@
 
 Application::Application() : mGameWindow(Window("Breakout",800,600))
 {
-	auto loadThread = std::thread(&Application::Load,this);
+	//auto loadThread = std::thread(&Application::Load,this);
 	Init();
-	loadThread.join();
+	Load();
+	//loadThread.join();
 	Update();
 }
 
@@ -221,6 +222,8 @@ void Application::Load()
 
 		GOutput->LoadSound("Hit", "res/Sounds/Pickup.wav");
 		GOutput->LoadSound("LostLife", "res/Sounds/LostLife.wav");
+		GOutput->LoadSound("Bounce", "res/Sounds/Bounce.wav");
+		GOutput->LoadSound("Menu", "res/Sounds/Menu.wav");
 
 		Cache->Insert<Transform>("GC", Transform());
 

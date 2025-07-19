@@ -38,16 +38,19 @@ void Ball::Update()
 		if (GetEntityPosition()->x <= 0)
 		{
 			mBallMovementX = 1;
+			GOutput->ALPlaySound("Bounce");
 		}
 
 		if (GetEntityPosition()->x >= 770)
 		{
 			mBallMovementX = -1;
+			GOutput->ALPlaySound("Bounce");
 		}
 
 		if (GetEntityPosition()->y <= 0)
 		{
 			mBallMovementY = 1;
+			GOutput->ALPlaySound("Bounce");
 		}
 
 		if (GetEntityPosition()->y >= 570)
@@ -65,6 +68,7 @@ void Ball::Update()
 			&& GetEntityPosition()->x + 15 <= mPlayer->GetEntityPosition()->x + mPlayer->GetEntitySize()->x)
 		{
 			mBallMovementY = -1;
+			GOutput->ALPlaySound("Bounce");
 		}
 
 		for (auto& block : mGameBlocks)

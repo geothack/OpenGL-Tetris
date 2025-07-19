@@ -32,6 +32,8 @@ public:
 
 	bool Shake = false;
 
+	void ResetEndScreenText();
+
 private:
 
 	std::array<Block, 30> mGameBlocks;
