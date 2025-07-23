@@ -20,6 +20,8 @@ Window::Window(std::string_view title, const int width, const int height)
 
 	auto glSuccess = ::gladLoadGLLoader((GLADloadproc)::SDL_GL_GetProcAddress);
 
+	glfwSwapInterval(1);
+
 	//Verify::Update("Failed to load opengl functions with sdl3. ", glSuccess);
 
 	//std::println("OpenGL Loaded with Version {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
